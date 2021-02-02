@@ -1,0 +1,36 @@
+{
+  "name": "pcms-testing",
+  "version": "1.0.0",
+  "description": "testing for peregrine-cms",
+  "main": "main.js",
+  "dependencies": {
+    "@codeceptjs/configure": "^0.6.2",
+    "@codeceptjs/examples": "^1.2.1",
+    "@codeceptjs/ui": "^0.4.3",
+    "codeceptjs": "^3.0.4",
+    "expect": "^26.6.2",
+    "playwright": "^1.7.1",
+    "puppeteer": "^5.4.0"
+  },
+  "scripts": {
+    "test": "npm run test:headless",
+    "test:headless": "cross-env HEADLESS=true codeceptjs run --steps",
+    "test:headful": "codeceptjs run --steps",
+    "test:ui": "codecept-ui --app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Felix-Puetz/pcms-testing.git"
+  },
+  "author": "felix puetz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Felix-Puetz/pcms-testing/issues"
+  },
+  "homepage": "https://github.com/Felix-Puetz/pcms-testing#readme",
+  "devDependencies": {
+    "@codeceptjs/helper": "^1.0.1",
+    "cross-env": "^7.0.3",
+    "form-data": "^3.0.0"
+  }
+}
