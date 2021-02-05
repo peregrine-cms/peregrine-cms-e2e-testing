@@ -13,7 +13,7 @@ This project uses [CodeceptJS](https://codecept.io/) with [Puppeteer](https://co
 - clone the repository
 - open a terminal inside the directory
 - run `npm install`
-- run `npm run test`
+- run `npm run test` (headless by default)
 #### Alternative run-modes
 - `test:headless` - the default run mode with its full name
 - `test:headful` - run with visible browser
