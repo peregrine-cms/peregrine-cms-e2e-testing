@@ -4,6 +4,7 @@ const editView = require('../components/EditView')
 const pathBrowser = require('../components/PathBrowser')
 const rightPanel = require('../components/RightPanel')
 const editable = require('../components/Editable')
+const createComponentModal = require('../components/CreateComponentModal')
 const {I} = inject()
 
 class EditPagePage {
@@ -14,6 +15,7 @@ class EditPagePage {
   pathBrowser
   rightPanel
   editable
+  createComponentModal
 
   constructor() {
     this.editorPanel = editorPanel
@@ -22,6 +24,7 @@ class EditPagePage {
     this.pathBrowser = pathBrowser
     this.rightPanel = rightPanel
     this.editable = editable
+    this.createComponentModal = createComponentModal
     this.locator = {
       loadSpinner() {
         return locate({css: '.spinner-wrapper'})

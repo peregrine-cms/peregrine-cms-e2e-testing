@@ -26,7 +26,7 @@ After(({perApi}) => {
   perApi.deleteTenant(TENANT)
 })
 
-Scenario('sync from edit-view to editor-panel', async ({editPagePage}) => {
+Scenario.skip('sync from edit-view to editor-panel', async ({editPagePage}) => {
   const text = `${FEATURE_NAME}_-äöüß?$)=!%"='\\\``
 
   editPagePage.editView.setNthInlineEditContent(1, text)
@@ -36,7 +36,7 @@ Scenario('sync from edit-view to editor-panel', async ({editPagePage}) => {
       .toBe(text)
 })
 
-Scenario('sync editor-panel to edit-view', async ({editPagePage}) => {
+Scenario.skip('sync editor-panel to edit-view', async ({editPagePage}) => {
   const text = `äöüß?$)=!%"='\\\`-_${FEATURE_NAME}`
 
   editPagePage.editorPanel.setNthTextEditorContent(1, text)
@@ -45,3 +45,18 @@ Scenario('sync editor-panel to edit-view', async ({editPagePage}) => {
   expect(await editPagePage.editorPanel.grabNthTextEditorContent(1))
       .toBe(text)
 })
+
+Scenario('keep content when creating component via [ctrl + .]',
+    async ({I, editPagePage}) => {
+      const {
+        editView,
+        createComponentModal
+      } = editPagePage
+      const content = await editView.grabNthInlineEditContent(1)
+
+      I.selectAll()
+      createComponentModal.createComponent('Rich Text - Example')
+
+      expect(await editView.grabNthInlineEditContent(1)).toBe(content)
+    }
+)
