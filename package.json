@@ -9,7 +9,7 @@
     "@codeceptjs/ui": "^0.4.3",
     "codeceptjs": "^3.0.4",
     "expect": "^26.6.2",
-    "playwright": "^1.7.1",
+    "playwright": "^1.8.1",
     "puppeteer": "^5.4.0"
   },
   "scripts": {
