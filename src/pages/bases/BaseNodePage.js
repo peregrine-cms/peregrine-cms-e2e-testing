@@ -1,20 +1,18 @@
+const BasePage = require('./BasePage')
 const explorer = require('../../components/Explorer')
 const {I} = inject()
 
-class BaseNodePage {
+class BaseNodePage extends BasePage{
 
   explorer
 
   constructor() {
+    super()
     this.explorer = explorer
   }
 
-  getUrl(tenant) {
-    throw `missing impl.: getUrl(tenant=${tenant})`
-  }
-
   navigate(tenant) {
-    I.amOnPage(this.getUrl(tenant))
+    super.navigate(tenant)
     I.waitForElement('.explorer', 10)
   }
 }

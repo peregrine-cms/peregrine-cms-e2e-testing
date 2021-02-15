@@ -7,6 +7,7 @@
     "@codeceptjs/configure": "^0.6.2",
     "@codeceptjs/examples": "^1.2.1",
     "@codeceptjs/ui": "^0.4.3",
+    "clipboardy": "^2.3.0",
     "codeceptjs": "^3.0.4",
     "expect": "^26.6.2",
     "playwright": "^1.8.1",

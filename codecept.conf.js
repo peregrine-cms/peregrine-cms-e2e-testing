@@ -32,6 +32,7 @@ exports.config = {
     I: './src/actor.codecept',
     perApi: './src/modules/PerApi',
     loginPage: './src/pages/LoginPage',
+    welcomePage: './src/pages/WelcomePage',
     editPagePage: './src/pages/EditPagePage',
     createPagePage: './src/pages/CreatePagePage',
     pagesPage: './src/pages/PagesPage',
