@@ -75,7 +75,34 @@ class PerApi {
     )
   }
 
-  createTemplate(tenant, name, title=name, component=`${tenant}/components/page`) {
+  updateObject(tenant, name, objectPath, params) {
+    return I.sendRestRequest(
+        Request.build()
+            .withUrl(`/admin/updateResource.json/content/${tenant}/objects/${name}`)
+            .withPOST()
+            .withFormData({
+              content: {
+                path: `/content/${tenant}/objects`,
+                name,
+                objectPath,
+                ...params
+              }
+            })
+            .as(`update object "${name}"`)
+    )
+  }
+
+  deleteObject(tenant, name) {
+    return I.sendRestRequest(
+        Request.build()
+            .withUrl(`/admin/deleteNode.json/content/${tenant}/objects/${name}`)
+            .withPOST()
+            .as(`delete object "${name}"`)
+    )
+  }
+
+  createTemplate(tenant, name, title = name,
+      component = `${tenant}/components/page`) {
     return I.sendRestRequest(
         Request.build()
             .withUrl(`/admin/createTemplate.json/content/${tenant}/templates`)
