@@ -49,4 +49,5 @@ Scenario('remove all items from collection',
       I.seeInPopup('save edit?')
       I.acceptPopup()
       I.seeElement(locate('#waitMask').as('waiting-mask'))
+      pause()
     })
