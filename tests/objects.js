@@ -48,6 +48,10 @@ Scenario('remove all items from collection',
       rightPanel.clickSaveBtn()
       I.seeInPopup('save edit?')
       I.acceptPopup()
+      /*
+      This is not supposed to happen. wait-mask should fade after finish loading
+      see issue #254 or more information
+       */
       I.seeElement(locate('#waitMask').as('waiting-mask'))
       pause()
     })
