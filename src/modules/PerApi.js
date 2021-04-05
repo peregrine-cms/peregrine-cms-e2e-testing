@@ -13,6 +13,7 @@ class PerApi {
               fromTenant: 'themecleanflex',
               toTenant: tenant,
               tenantTitle: title,
+              tenantUserPwd: 'TEST_DONT_CREATE_USER',
               colorPalette: palette
             })
             .as(`create tenant "${tenant}"`)
