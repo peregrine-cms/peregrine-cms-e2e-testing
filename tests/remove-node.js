@@ -3,8 +3,10 @@
  * npm run test -- ./tests/remove-node.js
  */
 
+const utils = require('../src/modules/utils')
+
 const FEATURE_NAME = 'remove-node'
-const TENANT = 'pcms_testing'
+const TENANT = utils.generateRandomName()
 const PAGE = FEATURE_NAME
 const ASSET = FEATURE_NAME
 const OBJECT = FEATURE_NAME
