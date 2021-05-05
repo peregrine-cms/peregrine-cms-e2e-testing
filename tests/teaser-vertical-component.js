@@ -3,10 +3,11 @@
  * npm run test -- ./tests/teaser-vertical-component.js
  */
 
+const utils = require('../src/modules/utils')
 const expect = require('expect')
 
 const FEATURE_NAME = 'teaser-vertical-component'
-const TENANT = 'pcms_testing'
+const TENANT = utils.generateRandomName()
 const PAGE = FEATURE_NAME
 
 Feature(FEATURE_NAME)

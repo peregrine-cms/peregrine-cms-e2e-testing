@@ -11,7 +11,8 @@
     "codeceptjs": "^3.0.4",
     "expect": "^26.6.2",
     "playwright": "^1.8.1",
-    "puppeteer": "^5.4.0"
+    "puppeteer": "^5.4.0",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "test": "npm run test:headless",

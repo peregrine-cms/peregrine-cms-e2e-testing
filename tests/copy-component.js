@@ -3,17 +3,15 @@
  * npm run test -- ./tests/copy-component.js
  */
 
+const utils = require('../src/modules/utils')
+
 const FEATURE_NAME = 'copy-component'
-const TENANT = 'pcms_testing'
+const TENANT = utils.generateRandomName()
 const PAGE = FEATURE_NAME
 
 Feature(FEATURE_NAME)
 
-Before(async ({loginAs, perApi, pagesPage, editPagePage}) => {
-  const {
-    editView
-  } = editPagePage
-
+Before(async ({loginAs, perApi, pagesPage}) => {
   await perApi.createTenant(TENANT)
   await perApi.createPage(TENANT, PAGE)
   await loginAs('admin')
