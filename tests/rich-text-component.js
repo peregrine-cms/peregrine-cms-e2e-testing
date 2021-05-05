@@ -3,10 +3,11 @@
  * npm run test -- ./tests/rich-text-component.js
  */
 
+const utils = require('../src/modules/utils')
 const expect = require('expect')
 
 const FEATURE_NAME = 'rich-text-component'
-const TENANT = 'pcms_testing'
+const TENANT = utils.generateRandomName()
 const PAGE = FEATURE_NAME
 
 Feature(FEATURE_NAME)

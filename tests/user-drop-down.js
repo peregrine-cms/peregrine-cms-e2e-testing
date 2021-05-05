@@ -3,11 +3,12 @@
  * npm run test -- ./tests/user-drop-down.js
  */
 
+const utils = require('../src/modules/utils')
 const expect = require('expect')
 const clipboardy = require('clipboardy')
 
 const FEATURE_NAME = 'user-drop-down'
-const TENANT = 'pcms_testing'
+const TENANT = utils.generateRandomName()
 
 Feature(FEATURE_NAME)
 

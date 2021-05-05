@@ -3,8 +3,10 @@
  * npm run test -- ./tests/rich-toolbar.js
  */
 
+const utils = require('../src/modules/utils')
+
 const FEATURE_NAME = 'rich-toolbar'
-const TENANT = 'pcms_testing'
+const TENANT = utils.generateRandomName()
 const PAGE = FEATURE_NAME
 
 Feature(FEATURE_NAME)

@@ -3,10 +3,11 @@
  * npm run test -- ./tests/range-slider.js
  */
 
+const utils = require('../src/modules/utils')
 const expect = require('expect')
 
 const FEATURE_NAME = 'range-slider'
-const TENANT = 'pcms_testing'
+const TENANT = utils.generateRandomName()
 const PAGE = FEATURE_NAME
 
 let topPadding
