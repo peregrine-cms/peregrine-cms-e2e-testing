@@ -51,7 +51,7 @@ class Request {
     return {
       url: this.url,
       method: this.method,
-      headers: this.headers,
+      headers: this.headers
     }
   }
 
@@ -108,7 +108,11 @@ class BuildableRequest extends Request {
   withFormData(data) {
     const form = new FormData()
     Object.keys(data).forEach((key) => {
-      form.append(key, data[key])
+      if (['object', 'array'].includes(typeof data[key])) {
+        form.append(key, JSON.stringify(data[key]))
+      } else {
+        form.append(key, data[key])
+      }
     })
     this.headers = form.getHeaders()
     this.data = form
