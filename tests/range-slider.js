@@ -26,6 +26,7 @@ Before(async ({ loginAs, perApi, pagesPage, editPagePage }) => {
   editPagePage.editView.selectNthInlineEdit(1)
   const { editorPanel } = editPagePage
   editorPanel.titleIs('Text')
+  editorPanel.openNthAccordionPanel(2)
   topPadding = editorPanel.getNthRangeField(1)
 })
 
