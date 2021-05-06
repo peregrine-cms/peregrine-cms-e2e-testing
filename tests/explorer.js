@@ -6,7 +6,7 @@
 const utils = require('../src/modules/utils')
 
 const FEATURE_NAME = 'explorer'
-let TENANT = ''
+let TENANT
 const PAGE = FEATURE_NAME
 
 Feature(FEATURE_NAME)
