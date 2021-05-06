@@ -7,12 +7,13 @@ const expect = require('expect')
 const utils = require('../src/modules/utils')
 
 const FEATURE_NAME = 'switching-components'
-const TENANT = utils.generateRandomName()
+let TENANT
 const PAGE = FEATURE_NAME
 
 Feature(FEATURE_NAME)
 
-Before(async ({loginAs, perApi, pagesPage}) => {
+Before(async ({ loginAs, perApi, pagesPage }) => {
+  TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   await perApi.createPage(TENANT, PAGE)
   await loginAs('admin')
@@ -20,11 +21,11 @@ Before(async ({loginAs, perApi, pagesPage}) => {
   pagesPage.editPage(PAGE)
 })
 
-After(({perApi}) => {
+After(({ perApi }) => {
   perApi.deleteTenant(TENANT)
 })
 
-Scenario('selection was cleared', async ({I, perApi, editPagePage}) => {
+Scenario('selection was cleared', async ({ I, perApi, editPagePage }) => {
   await perApi.addComponent(TENANT, PAGE, 'richtext', 'into-into', 'sample')
   await perApi.addComponent(TENANT, PAGE, 'richtext', 'into-into', 'sample')
   I.refreshPage()
@@ -37,9 +38,9 @@ Scenario('selection was cleared', async ({I, perApi, editPagePage}) => {
   await expect(range.start).toBe(range.end)
 })
 
-Scenario('content stays the same', async ({I, perApi, editPagePage}) => {
+Scenario('content stays the same', async ({ I, perApi, editPagePage }) => {
   await perApi.addComponent(TENANT, PAGE, 'teaservertical', 'into-into',
-      'sample')
+    'sample')
   await perApi.addComponent(TENANT, PAGE, 'richtext', 'into-into', 'sample')
   I.refreshPage()
   editPagePage.loaded()
@@ -68,6 +69,6 @@ Scenario('content stays the same', async ({I, perApi, editPagePage}) => {
 
   after.forEach((value, i) => {
     expect(after[i].trim())
-        .toBe(before[i].trim())
+      .toBe(before[i].trim())
   })
 })
