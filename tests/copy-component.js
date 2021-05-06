@@ -6,12 +6,13 @@
 const utils = require('../src/modules/utils')
 
 const FEATURE_NAME = 'copy-component'
-const TENANT = utils.generateRandomName()
+let TENANT
 const PAGE = FEATURE_NAME
 
 Feature(FEATURE_NAME)
 
-Before(async ({loginAs, perApi, pagesPage}) => {
+Before(async ({ loginAs, perApi, pagesPage }) => {
+  TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   await perApi.createPage(TENANT, PAGE)
   await loginAs('admin')
@@ -19,42 +20,42 @@ Before(async ({loginAs, perApi, pagesPage}) => {
   pagesPage.editPage(PAGE)
 })
 
-After(({perApi}) => {
+After(({ perApi }) => {
   perApi.deleteTenant(TENANT)
 })
 
 Scenario('copy simpletext component',
-    async ({I, perApi, editPagePage}) => {
-      const {
-        editable,
-        editView
-      } = editPagePage
+  async ({ I, perApi, editPagePage }) => {
+    const {
+      editable,
+      editView
+    } = editPagePage
 
-      await perApi.addComponent(TENANT, PAGE, 'simpletext', 'into-before',
-          'example')
-      I.refreshPage()
-      I.waitForNavigation()
-      editView.textComponent.seeNumber(1)
-      editView.selectNthInlineEdit(1)
-      editable.copy()
-      editable.paste()
-      editView.textComponent.seeNumber(2)
-    })
+    await perApi.addComponent(TENANT, PAGE, 'simpletext', 'into-before',
+      'example')
+    I.refreshPage()
+    I.waitForNavigation()
+    editView.textComponent.seeNumber(1)
+    editView.selectNthInlineEdit(1)
+    editable.copy()
+    editable.paste()
+    editView.textComponent.seeNumber(2)
+  })
 
 Scenario('copy cards-sample component',
-    async ({I, perApi, editPagePage}) => {
-      const {
-        editable,
-        editView
-      } = editPagePage
+  async ({ I, perApi, editPagePage }) => {
+    const {
+      editable,
+      editView
+    } = editPagePage
 
-      await perApi.addComponent(TENANT, PAGE, 'cards', 'into-before',
-          'sample')
-      I.refreshPage()
-      I.waitForNavigation()
-      editView.cardsComponent.seeNumber(1)
-      editView.selectNthInlineEdit(1)
-      editable.copy()
-      editable.paste()
-      editView.cardsComponent.seeNumber(2)
-    })
+    await perApi.addComponent(TENANT, PAGE, 'cards', 'into-before',
+      'sample')
+    I.refreshPage()
+    I.waitForNavigation()
+    editView.cardsComponent.seeNumber(1)
+    editView.selectNthInlineEdit(1)
+    editable.copy()
+    editable.paste()
+    editView.cardsComponent.seeNumber(2)
+  })
