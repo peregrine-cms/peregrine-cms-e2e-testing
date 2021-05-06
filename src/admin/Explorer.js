@@ -1,14 +1,14 @@
-const askUserModal = require('./AskUserModal')
 const rightPanel = require('./RightPanel')
+const modals = require('./modals/Modals')
 const { I } = inject()
 
 class Explorer {
 
-  askUserModal
+  modals
   rightPanel
 
   constructor() {
-    this.askUserModal = askUserModal
+    this.modals = modals
     this.rightPanel = rightPanel
     this.locator = {
       container() {
@@ -39,12 +39,16 @@ class Explorer {
   deleteNode(type, title) {
     I.waitForElement(this.locator.deleteButton(type, title), 5)
     I.click(this.locator.deleteButton(type, title))
-    this.askUserModal.confirm()
+    this.modals.askUser.confirm()
     I.dontSeeElement(this.locator.deleteButton(type, title))
   }
 
   editNode(type, title) {
     I.click(this.locator.editButton(type, title))
+  }
+
+  replicateNode(type, title) {
+    I.click(this.locator.replicateButton(type, title))
   }
 }
 
