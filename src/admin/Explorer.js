@@ -28,6 +28,11 @@ class Explorer {
         return this.container()
             .find('a').withAttr({title: `delete '${title}'`})
             .as(`delete ${type} ("${title}")`)
+      },
+      replicateButton(type, title) {
+        return this.container()
+            .find('a').withAttr({title: `replicate '${title}'`})
+            .as(`delete ${type} ("${title}")`)
       }
     }
   }

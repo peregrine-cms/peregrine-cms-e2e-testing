@@ -20,6 +20,10 @@ class PagesPage extends BaseNodePage {
     this.explorer.editNode('page', title)
     editPagePage.loaded()
   }
+
+  replicatePage(title) {
+    this.explorer.replicateNode('page', title)
+  }
 }
 
 module.exports = new PagesPage()
