@@ -38,7 +38,8 @@ exports.config = {
     pagesPage: './src/pages/PagesPage',
     assetsPage: './src/pages/AssetsPage',
     objectsPage: './src/pages/ObjectsPage',
-    templatesPage: './src/pages/TemplatesPage'
+    templatesPage: './src/pages/TemplatesPage',
+    themeCleanFlex: './src/components/ThemeCleanFlex'
   },
   async teardown() {
     const outputDir = path.join(__dirname, exports.config.output)

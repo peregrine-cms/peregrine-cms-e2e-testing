@@ -1,19 +1,8 @@
-const teaserVertical = require('../components/TeaserVerticalComponent')
-const textComponent = require('../components/TextComponent')
-const cardsComponent = require('../components/CardsComponent')
-
 const { I } = inject()
 
 class EditView {
 
-  teaserVertical
-  textComponent
-  cardsComponent
-
   constructor() {
-    this.teaserVertical = teaserVertical.inEditView
-    this.textComponent = textComponent.inEditView
-    this.cardsComponent = cardsComponent.inEditView
     this.modal = {
       animation: {
         in: 0.3, //s

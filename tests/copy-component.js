@@ -25,7 +25,7 @@ After(({ perApi }) => {
 })
 
 Scenario('copy simpletext component',
-  async ({ I, perApi, editPagePage }) => {
+  async ({ I, perApi, editPagePage, themeCleanFlex }) => {
     const {
       editable,
       editView
@@ -35,15 +35,16 @@ Scenario('copy simpletext component',
       'example')
     I.refreshPage()
     I.waitForNavigation()
-    editView.textComponent.seeNumber(1)
+    const { text } = themeCleanFlex
+    text.seeNumber(1)
     editView.selectNthInlineEdit(1)
     editable.copy()
     editable.paste()
-    editView.textComponent.seeNumber(2)
+    text.seeNumber(2)
   })
 
 Scenario('copy cards-sample component',
-  async ({ I, perApi, editPagePage }) => {
+  async ({ I, perApi, editPagePage, themeCleanFlex }) => {
     const {
       editable,
       editView
@@ -53,9 +54,10 @@ Scenario('copy cards-sample component',
       'sample')
     I.refreshPage()
     I.waitForNavigation()
-    editView.cardsComponent.seeNumber(1)
+    const { cards } = themeCleanFlex
+    cards.seeNumber(1)
     editView.selectNthInlineEdit(1)
     editable.copy()
     editable.paste()
-    editView.cardsComponent.seeNumber(2)
+    cards.seeNumber(2)
   })

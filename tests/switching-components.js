@@ -38,20 +38,21 @@ Scenario('selection was cleared', async ({ I, perApi, editPagePage }) => {
   await expect(range.start).toBe(range.end)
 })
 
-Scenario('content stays the same', async ({ I, perApi, editPagePage }) => {
+Scenario('content stays the same', async ({ I, perApi, editPagePage, themeCleanFlex }) => {
   await perApi.addComponent(TENANT, PAGE, 'teaservertical', 'into-into',
     'sample')
   await perApi.addComponent(TENANT, PAGE, 'richtext', 'into-into', 'sample')
   I.refreshPage()
   editPagePage.loaded()
+  const { teaserVertical } = themeCleanFlex
   const before = [
-    await editPagePage.editView.teaserVertical.grabTitle(),
-    await editPagePage.editView.teaserVertical.grabSubtitle(),
-    await editPagePage.editView.teaserVertical.grabText(),
-    await editPagePage.editView.teaserVertical.grabButtonText(1),
-    await editPagePage.editView.teaserVertical.grabButtonText(2)
+    await teaserVertical.grabTitle(),
+    await teaserVertical.grabSubtitle(),
+    await teaserVertical.grabText(),
+    await teaserVertical.grabButtonText(1),
+    await teaserVertical.grabButtonText(2)
   ]
-  editPagePage.editView.teaserVertical.selectTitle()
+  teaserVertical.selectTitle()
   I.pressKey('Tab')
   I.pressKey('Tab')
   I.pressKey('Tab')
@@ -60,11 +61,11 @@ Scenario('content stays the same', async ({ I, perApi, editPagePage }) => {
   I.pressKey('Tab')
   I.pressKey('Tab')
   const after = [
-    await editPagePage.editView.teaserVertical.grabTitle(),
-    await editPagePage.editView.teaserVertical.grabSubtitle(),
-    await editPagePage.editView.teaserVertical.grabText(),
-    await editPagePage.editView.teaserVertical.grabButtonText(1),
-    await editPagePage.editView.teaserVertical.grabButtonText(2)
+    await teaserVertical.grabTitle(),
+    await teaserVertical.grabSubtitle(),
+    await teaserVertical.grabText(),
+    await teaserVertical.grabButtonText(1),
+    await teaserVertical.grabButtonText(2)
   ]
 
   after.forEach((value, i) => {
