@@ -1,6 +1,4 @@
-const {Website} = require('../const')
-
-const {I} = inject()
+const { I } = inject()
 
 class PathBrowser {
 

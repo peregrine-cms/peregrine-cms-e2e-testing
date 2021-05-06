@@ -1,4 +1,4 @@
-const {I} = inject()
+const { I } = inject()
 
 const ACTIVE_BTN_BG_COLOR = 'rgb(255, 152, 0)'
 const INACTIVE_BTN_BG_COLOR = 'rgb(55, 71, 79)'

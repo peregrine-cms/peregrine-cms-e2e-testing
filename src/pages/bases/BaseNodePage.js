@@ -1,8 +1,8 @@
 const BasePage = require('./BasePage')
-const explorer = require('../../components/Explorer')
+const explorer = require('../../admin/Explorer')
 const {I} = inject()
 
-class BaseNodePage extends BasePage{
+class BaseNodePage extends BasePage {
 
   explorer
 

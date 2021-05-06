@@ -1,8 +1,8 @@
-const teaserVertical = require('./TeaserVerticalComponent')
-const textComponent = require('./TextComponent')
-const cardsComponent = require('./CardsComponent')
+const teaserVertical = require('../components/TeaserVerticalComponent')
+const textComponent = require('../components/TextComponent')
+const cardsComponent = require('../components/CardsComponent')
 
-const {I} = inject()
+const { I } = inject()
 
 class EditView {
 

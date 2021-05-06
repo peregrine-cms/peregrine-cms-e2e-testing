@@ -1,6 +1,6 @@
 const askUserModal = require('./AskUserModal')
-const rightPanel = require('../components/RightPanel')
-const {I} = inject()
+const rightPanel = require('./RightPanel')
+const { I } = inject()
 
 class Explorer {
 

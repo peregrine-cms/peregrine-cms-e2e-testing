@@ -1,10 +1,10 @@
-const editorPanel = require('../components/EditorPanel')
-const richToolbar = require('../components/Richtoolbar')
-const editView = require('../components/EditView')
-const pathBrowser = require('../components/PathBrowser')
-const rightPanel = require('../components/RightPanel')
-const editable = require('../components/Editable')
-const createComponentModal = require('../components/CreateComponentModal')
+const editorPanel = require('../admin/EditorPanel')
+const richToolbar = require('../admin/Richtoolbar')
+const editView = require('../admin/EditView')
+const pathBrowser = require('../admin/PathBrowser')
+const rightPanel = require('../admin/RightPanel')
+const editable = require('../admin/Editable')
+const createComponentModal = require('../admin/CreateComponentModal')
 const {I} = inject()
 
 class EditPagePage {

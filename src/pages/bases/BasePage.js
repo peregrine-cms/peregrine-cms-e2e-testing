@@ -1,4 +1,4 @@
-const topNav = require('../../components/TopNav')
+const topNav = require('../../admin/TopNav')
 
 const {I} = inject()
 

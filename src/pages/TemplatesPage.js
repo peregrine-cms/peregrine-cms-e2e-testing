@@ -1,7 +1,7 @@
 const BaseNodePage = require('./bases/BaseNodePage')
 const {I} = inject()
 
-class TemplatesPage extends BaseNodePage{
+class TemplatesPage extends BaseNodePage {
 
   constructor() {
     super()
