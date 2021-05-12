@@ -8,21 +8,22 @@ const expect = require('expect')
 const clipboardy = require('clipboardy')
 
 const FEATURE_NAME = 'user-drop-down'
-const TENANT = utils.generateRandomName()
+let TENANT
 
 Feature(FEATURE_NAME)
 
-Before(async ({loginAs, perApi, assetsPage}) => {
+Before(async ({ loginAs, perApi, assetsPage }) => {
+  TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   await loginAs('admin')
   assetsPage.navigate(TENANT)
 })
 
-After(({perApi}) => {
+After(({ perApi }) => {
   perApi.deleteTenant(TENANT)
 })
 
-Scenario('copy username', async ({welcomePage, I}) => {
+Scenario('copy username', async ({ welcomePage, I }) => {
   const {
     topNav
   } = welcomePage
