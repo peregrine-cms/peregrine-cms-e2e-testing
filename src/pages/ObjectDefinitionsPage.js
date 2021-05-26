@@ -1,7 +1,7 @@
 const BaseNodePage = require('./bases/BaseNodePage');
 const { I } = inject();
 
-class AssetsPage extends BaseNodePage {
+class ObjectDefinitionsPage extends BaseNodePage {
   constructor() {
     super();
   }
@@ -32,6 +32,7 @@ class AssetsPage extends BaseNodePage {
     await I.waitForText('Insert template');
     await I.click(template);
     await I.waitForText('"type": "VerticalLayout",');
+    await I.click('Next');
     await I.click('Finish');
     await I.waitForText(name, 10);
   }
@@ -59,7 +60,11 @@ class AssetsPage extends BaseNodePage {
   deleteFile(name) {
     this.explorer.deleteNode('object-definition-file', `${name}.json`);
   }
+
+  editFile(name) {
+    this.explorer.editNode('object-definition-file', `${name}.json`);
+  }
 }
 
-module.exports = new AssetsPage();
-module.exports.AssetsPage = AssetsPage;
+module.exports = new ObjectDefinitionsPage();
+module.exports.AssetsPage = ObjectDefinitionsPage;

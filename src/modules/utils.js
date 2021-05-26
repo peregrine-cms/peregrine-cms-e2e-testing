@@ -1,28 +1,38 @@
-const uuid = require('uuid')
+const path = require('path');
+const uuid = require('uuid');
 
 function currentTime() {
-  const now = new Date()
-  const day = `${now.getDate()}`.padStart(2, '0')
-  const month = `${now.getMonth() + 1}`.padStart(2, '0')
-  const year = `${now.getFullYear()}`
-  const hour = `${now.getHours()}`.padStart(2, '0')
-  const min = `${now.getMinutes()}`.padStart(2, '0')
-  const sec = `${now.getSeconds()}`.padStart(2, '0')
-  const ms = `${now.getMilliseconds()}`.padStart(2, '0')
+  const now = new Date();
+  const day = `${now.getDate()}`.padStart(2, '0');
+  const month = `${now.getMonth() + 1}`.padStart(2, '0');
+  const year = `${now.getFullYear()}`;
+  const hour = `${now.getHours()}`.padStart(2, '0');
+  const min = `${now.getMinutes()}`.padStart(2, '0');
+  const sec = `${now.getSeconds()}`.padStart(2, '0');
+  const ms = `${now.getMilliseconds()}`.padStart(2, '0');
 
-  return `${year}-${month}-${day}_${hour}-${min}-${sec}_${ms}`
+  return `${year}-${month}-${day}_${hour}-${min}-${sec}_${ms}`;
 }
 
 function generateRandomName() {
-  let result = uuid.v4()
+  let result = uuid.v4();
   while (result.indexOf('-') > -1) {
-    result = result.replace('-', '')
+    result = result.replace('-', '');
   }
 
-  return result
+  return result;
+}
+
+function toFeatureName(filename) {
+  const arr = path.basename(filename).split('.');
+
+  arr.pop();
+
+  return arr.join('.');
 }
 
 module.exports = {
   currentTime,
-  generateRandomName
-}
+  generateRandomName,
+  toFeatureName,
+};
