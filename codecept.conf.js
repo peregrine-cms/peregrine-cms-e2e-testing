@@ -40,6 +40,7 @@ exports.config = {
     objectsPage: './src/pages/ObjectsPage',
     templatesPage: './src/pages/TemplatesPage',
     objectDefinitionsPage: './src/pages/ObjectDefinitionsPage',
+    fileEditor: './src/pages/FileEditor',
   },
   async teardown() {
     const outputDir = path.join(__dirname, exports.config.output);

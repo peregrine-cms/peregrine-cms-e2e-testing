@@ -37,6 +37,11 @@ class Explorer {
           .withAttr({ title: `delete '${title}'` })
           .as(`delete ${type} ("${title}")`);
       },
+      filterSwitch() {
+        return this.container()
+          .find('.explorer-main .switch > label')
+          .as('filter-switch');
+      },
     };
   }
 
@@ -65,6 +70,10 @@ class Explorer {
 
   editNode(type, title) {
     I.click(this.locator.editButton(type, title));
+  }
+
+  toggleFilter() {
+    I.click(this.locator.filterSwitch());
   }
 }
 

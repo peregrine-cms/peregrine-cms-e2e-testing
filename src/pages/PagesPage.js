@@ -3,22 +3,26 @@ const editPagePage = require('./EditPagePage')
 const {I} = inject()
 
 class PagesPage extends BaseNodePage {
-
   constructor() {
-    super()
+    super();
   }
 
   getUrl(tenant) {
-    return `/content/admin/pages/pages.html/path:/content/${tenant}/pages`
+    return `/content/admin/pages/pages.html/path:/content/${tenant}/pages`;
   }
 
   deletePage(title) {
-    this.explorer.deleteNode('page', title)
+    this.explorer.deleteNode('page', title);
   }
 
   editPage(title) {
-    this.explorer.editNode('page', title)
-    editPagePage.loaded()
+    this.explorer.editNode('page', title);
+    editPagePage.loaded();
+  }
+
+  editFile(title) {
+    this.explorer.editNode('file', title);
+    fileEditor.loaded();
   }
 }
 
