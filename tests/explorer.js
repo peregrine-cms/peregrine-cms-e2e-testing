@@ -41,5 +41,6 @@ Scenario('toggle "filter secondary items"', async ({ I, pagesPage }) => {
   I.dontSee(filename);
   pagesPage.explorer.toggleFilter();
   I.see(filename);
-  pagesPage.editFile(filename);
+  pagesPage.explorer.toggleFilter();
+  I.dontSee(filename);
 });

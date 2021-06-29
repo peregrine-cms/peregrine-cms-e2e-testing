@@ -24,6 +24,10 @@ class PagesPage extends BaseNodePage {
     this.explorer.editNode('file', title);
     fileEditor.loaded();
   }
+
+  seePage(title) {
+    this.explorer.seeNode('page', title);
+  }
 }
 
 module.exports = new PagesPage()

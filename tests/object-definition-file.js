@@ -39,17 +39,6 @@ Scenario('view', async ({ I, objectDefinitionsPage }) => {
   I.see(FILE_CONTENT);
 });
 
-Scenario('edit', async ({ I, objectDefinitionsPage }) => {
-  objectDefinitionsPage.editFile(FILE);
-  I.click('Save');
-  objectDefinitionsPage.seeFile(FILE);
-});
-
-Scenario('view after edit', async ({ I, objectDefinitionsPage }) => {
-  objectDefinitionsPage.editFile(FILE);
-  I.see(FILE_CONTENT);
-});
-
 Scenario('delete', async ({ objectDefinitionsPage }) => {
   await objectDefinitionsPage.deleteFile(FILE);
   objectDefinitionsPage.dontSeeFile(FILE);

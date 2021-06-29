@@ -1,46 +1,73 @@
 /**
  * single-test run:
- * npm run test -- ./tests/edit-page.js
+ * npm run test -- ./tests/file-editor.js
+ * npm run test:headful -- ./tests/file-editor.js
  */
 
 const utils = require('../src/modules/utils');
 
-const FEATURE_NAME = 'edit-page';
+const FEATURE_NAME = 'file-page';
 let TENANT;
 const PAGE = FEATURE_NAME;
-const TEST_CONTENT = JSON.stringify({ bla: 'bli', blub: 5, is: true });
+const TEST_CODE = JSON.stringify({ bla: 'bli', blub: 5, is: true });
 
 Feature(FEATURE_NAME);
 
-Before(async ({ loginAs, perApi, pagesPage }) => {
+Before(async ({ loginAs, perApi }) => {
   TENANT = utils.generateRandomName();
   await perApi.createTenant(TENANT);
   await perApi.createPage(TENANT, PAGE);
   await loginAs('admin');
-  pagesPage.navigate(TENANT);
 });
 
 After(({ perApi }) => {
   perApi.deleteTenant(TENANT);
 });
 
-Scenario('see file-editor', async ({ pagesPage, fileEditor }) => {
-  pagesPage.explorer.toggleFilter();
-  pagesPage.editFile('manifest.json');
-  fileEditor.loaded();
+Scenario('save', async ({ fileEditor }) => {
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.fillCode(TEST_CODE);
+  await fileEditor.clickSave();
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.seeCode(TEST_CODE);
 });
 
-Scenario.only('save', async ({ pagesPage, fileEditor }) => {
-  await pagesPage.explorer.toggleFilter();
-  await pagesPage.editFile('manifest.json');
-  await fileEditor.loaded();
-  await fileEditor.fillEditor(TEST_CONTENT);
+Scenario('save & exit', async ({ fileEditor, pagesPage }) => {
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.fillCode(TEST_CODE);
+  await fileEditor.clickSaveAndExit();
+  await pagesPage.seePage('Home');
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.seeCode(TEST_CODE);
 });
 
-Scenario.todo('save & exit', () => {});
+Scenario('confirm exit without saving', async ({ fileEditor, pagesPage }) => {
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
 
-Scenario.todo('confirm exit without saving', () => {});
+  const code = await fileEditor.grabCode();
 
-Scenario.todo('cancel exit without saving', () => {});
+  await fileEditor.fillCode(TEST_CODE);
+  await fileEditor.clickExit(true);
+  await pagesPage.seePage('Home');
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.seeCode(code);
+});
 
-Scenario.todo('exit (no changes)', () => {});
+Scenario('cancel exit without saving', async ({ fileEditor }) => {
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.fillCode(TEST_CODE);
+  await fileEditor.clickExit(false);
+  await fileEditor.seeMyself();
+  await fileEditor.seeCode(TEST_CODE);
+});
+
+Scenario('exit (no changes)', async ({ fileEditor, pagesPage }) => {
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+
+  const code = await fileEditor.grabCode();
+
+  await fileEditor.clickExit();
+  await pagesPage.seePage('Home');
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.seeCode(code);
+});
