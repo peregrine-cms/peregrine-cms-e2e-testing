@@ -15,6 +15,7 @@ Feature(FEATURE_NAME);
 
 Before(async ({ loginAs, perApi }) => {
   TENANT = utils.generateRandomName();
+
   await perApi.createTenant(TENANT);
   await perApi.createPage(TENANT, PAGE);
   await loginAs('admin');
