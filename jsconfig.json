@@ -1,5 +1,10 @@
 {
-  "compilerOptions": {
-    "allowJs": true
-  }
+  "include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.json",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
