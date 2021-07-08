@@ -7,7 +7,7 @@ const { setHeadlessWhen } = require('@codeceptjs/configure');
 // export HEADLESS=true && npx codeceptjs run
 setHeadlessWhen(process.env.HEADLESS);
 
-exports.config = {
+const MODULES_PATH = (exports.config = {
   tests: './tests/*.js',
   output: `./output`,
   verbose: true,
@@ -41,6 +41,7 @@ exports.config = {
     templatesPage: './src/pages/TemplatesPage',
     objectDefinitionsPage: './src/pages/ObjectDefinitionsPage',
     fileEditor: './src/pages/FileEditor',
+    toast: './src/components/Toast',
   },
   async teardown() {
     const outputDir = path.join(__dirname, exports.config.output);
@@ -84,4 +85,4 @@ exports.config = {
       },
     },
   },
-};
+});

@@ -1,12 +1,12 @@
 /**
  * single-test run:
- * npm run test -- ./tests/file-editor.js
- * npm run test:headful -- ./tests/file-editor.js
+ * npm run test -- ./tests/file-editor.test.js
+ * npm run test:headful -- ./tests/file-editor.test.js
  */
 
 const utils = require('../src/modules/utils');
 
-const FEATURE_NAME = 'file-page';
+const FEATURE_NAME = utils.toFeatureName(__filename);
 let TENANT;
 const PAGE = FEATURE_NAME;
 const TEST_CODE = JSON.stringify({ bla: 'bli', blub: 5, is: true });
@@ -29,6 +29,15 @@ Scenario('save', async ({ fileEditor }) => {
   await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
   await fileEditor.fillCode(TEST_CODE);
   await fileEditor.clickSave();
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.seeCode(TEST_CODE);
+});
+
+Scenario('save with [CTRL + S]', async ({ fileEditor, I, toast }) => {
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.fillCode(TEST_CODE);
+  await I.pressKey(['CommandOrControl', 's']);
+  await toast.see('Saved file!', 'success');
   await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
   await fileEditor.seeCode(TEST_CODE);
 });

@@ -23,12 +23,10 @@ function generateRandomName() {
   return result;
 }
 
-function toFeatureName(filename) {
-  const arr = path.basename(filename).split('.');
+function toFeatureName(file) {
+  const basename = path.basename(file);
 
-  arr.pop();
-
-  return arr.join('.');
+  return basename.replace('.test.js', '');
 }
 
 module.exports = {

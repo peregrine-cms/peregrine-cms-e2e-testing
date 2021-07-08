@@ -1,11 +1,12 @@
 /**
  * single-test run:
- * npm run test -- ./tests/explorer.js
+ * npm run test -- ./tests/explorer.test.js
+ * npm run test:headful -- ./tests/explorer.test.js
  */
 
 const utils = require('../src/modules/utils');
 
-const FEATURE_NAME = 'explorer';
+const FEATURE_NAME = utils.toFeatureName(__filename);
 let TENANT;
 const PAGE = FEATURE_NAME;
 

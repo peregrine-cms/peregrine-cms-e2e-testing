@@ -1,7 +1,7 @@
 /**
  * single-test run:
  * npm run test -- ./tests/object-definition-file.js
- * npm run test:headful -- ./tests/object-definition-file.js
+ * npm run test:headful -- ./tests/object-definition-file.test.js
  */
 
 const utils = require('../src/modules/utils');
