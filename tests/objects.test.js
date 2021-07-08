@@ -21,7 +21,8 @@ After(async ({ perApi }) => {
   await perApi.deleteObject(TENANT, OBJECT_NAME);
 });
 
-Scenario(
+//broken
+Scenario.skip(
   'remove all items from collection',
   async ({ I, perApi, objectsPage }) => {
     const {

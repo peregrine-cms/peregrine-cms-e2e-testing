@@ -29,20 +29,15 @@ After(({ perApi }) => {
   perApi.deleteTenant(TENANT);
 });
 
-Scenario.skip(
-  'sync from edit-view to editor-panel',
-  async ({ editPagePage }) => {
-    const text = `${FEATURE_NAME}_-äöüß?$)=!%"='\\\``;
+Scenario('sync from edit-view to editor-panel', async ({ editPagePage }) => {
+  const text = `${FEATURE_NAME}_-äöüß?$)=!%"='\\\``;
 
-    editPagePage.editView.setNthInlineEditContent(1, text);
-    expect(await editPagePage.editorPanel.grabNthTextEditorContent(1)).toBe(
-      text
-    );
-    expect(await editPagePage.editView.grabNthInlineEditContent(1)).toBe(text);
-  }
-);
+  editPagePage.editView.setNthInlineEditContent(1, text);
+  expect(await editPagePage.editorPanel.grabNthTextEditorContent(1)).toBe(text);
+  expect(await editPagePage.editView.grabNthInlineEditContent(1)).toBe(text);
+});
 
-Scenario.skip('sync editor-panel to edit-view', async ({ editPagePage }) => {
+Scenario('sync editor-panel to edit-view', async ({ editPagePage }) => {
   const text = `äöüß?$)=!%"='\\\`-_${FEATURE_NAME}`;
 
   editPagePage.editorPanel.setNthTextEditorContent(1, text);

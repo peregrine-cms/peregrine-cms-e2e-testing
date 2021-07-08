@@ -47,7 +47,9 @@ const MODULES_PATH = (exports.config = {
     const outputDir = path.join(__dirname, exports.config.output);
     const fileName = `${users.admin.username}_session.json`;
 
-    await fs.unlinkSync(path.join(outputDir, fileName));
+    if (fs.existsSync(path.join(outputDir, fileName))) {
+      fs.unlinkSync(path.join(outputDir, fileName));
+    }
   },
   mocha: {},
   name: 'pcms-testing',
