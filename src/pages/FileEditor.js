@@ -74,11 +74,18 @@ class FileEditor {
   }
 
   async grabCode() {
+    I.waitForElement(this.locator.code());
     const value = await I.executeScript((sel) => {
       return document.querySelector(sel).__vue__.editor.getValue();
     }, '.vue-codemirror-wrap');
 
     return value;
+  }
+
+  autoFormat() {
+    I.click(this.locator.code());
+    I.selectAll();
+    I.pressKey(['CommandOrControl', 'Alt', 'l']);
   }
 
   clickSave() {

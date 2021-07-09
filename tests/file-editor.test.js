@@ -9,7 +9,8 @@ const utils = require('../src/modules/utils');
 const FEATURE_NAME = utils.toFeatureName(__filename);
 let TENANT;
 const PAGE = FEATURE_NAME;
-const TEST_CODE = JSON.stringify({ bla: 'bli', blub: 5, is: true });
+const TEST_CODE = `const foo = {bar: 0};`;
+const TEST_CODE_FORMATTED = `const foo = {\n  bar: 0};\n`;
 
 Feature(FEATURE_NAME);
 
@@ -40,6 +41,15 @@ Scenario('save with [CTRL + S]', async ({ fileEditor, I, toast }) => {
   await toast.see('Saved file!', 'success');
   await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
   await fileEditor.seeCode(TEST_CODE);
+});
+
+Scenario('auto-format', async ({ fileEditor, I }) => {
+  console.log(TEST_CODE, TEST_CODE_FORMATTED);
+  await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
+  await fileEditor.fillCode(TEST_CODE);
+  await fileEditor.seeCode(TEST_CODE);
+  await fileEditor.autoFormat();
+  await fileEditor.seeCode(TEST_CODE_FORMATTED);
 });
 
 Scenario('save & exit', async ({ fileEditor, pagesPage }) => {
