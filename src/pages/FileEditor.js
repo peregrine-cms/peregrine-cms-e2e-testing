@@ -84,7 +84,6 @@ class FileEditor {
 
   autoFormat() {
     I.click(this.locator.code());
-    I.selectAll();
     I.pressKey(['CommandOrControl', 'Alt', 'l']);
   }
 

@@ -44,10 +44,10 @@ Scenario('save with [CTRL + S]', async ({ fileEditor, I, toast }) => {
 });
 
 Scenario('auto-format', async ({ fileEditor, I }) => {
-  console.log(TEST_CODE, TEST_CODE_FORMATTED);
   await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
   await fileEditor.fillCode(TEST_CODE);
   await fileEditor.seeCode(TEST_CODE);
+  await I.selectAll();
   await fileEditor.autoFormat();
   await fileEditor.seeCode(TEST_CODE_FORMATTED);
 });
