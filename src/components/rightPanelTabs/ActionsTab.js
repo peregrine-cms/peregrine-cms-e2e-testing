@@ -1,3 +1,6 @@
+const renameModal = require('../RenameModal');
+const askUserModal = require('../AskUserModal');
+
 const { I } = inject();
 
 class ActionsTab {
@@ -6,18 +9,37 @@ class ActionsTab {
       container() {
         return locate('.explorer-preview-content .action-list');
       },
-      renamePageBtn() {
+      renameBtn() {
         return this.container()
           .find('.action .icon')
           .withText('text_format')
-          .as('rename-page-btn');
+          .as('rename-btn');
+      },
+      deleteBtn() {
+        return this.container()
+          .find('.action .icon')
+          .withText('delete')
+          .as('delete-btn');
       },
     };
   }
 
-  clickRenamePage() {
-    I.waitForElement(this.locator.renamePageBtn(), 10);
-    I.click(this.locator.renamePageBtn());
+  rename(title, name = null) {
+    I.waitForElement(this.locator.renameBtn(), 10);
+    I.click(this.locator.renameBtn());
+    renameModal.fillTitleField(title);
+
+    if (name) {
+      renameModal.fillNameField(name);
+    }
+
+    renameModal.clickSubmit();
+  }
+
+  delete() {
+    I.waitForElement(this.locator.deleteBtn(), 10);
+    I.click(this.locator.deleteBtn());
+    askUserModal.confirm();
   }
 }
 

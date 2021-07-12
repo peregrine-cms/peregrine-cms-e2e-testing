@@ -12,6 +12,9 @@ class RenameModal extends BaseModal {
       titleField() {
         return this.container().find('#title').as('title-field');
       },
+      nameField() {
+        return this.container().find('#name').as('name-field');
+      },
       submitBtn() {
         return this.container()
           .find('.modal-footer .modal-action')
@@ -25,6 +28,12 @@ class RenameModal extends BaseModal {
     I.wait(this.animation.in);
     I.waitForElement(this.locator.titleField(), 10);
     I.fillField(this.locator.titleField(), value);
+  }
+
+  fillNameField(value) {
+    I.wait(this.animation.in);
+    I.waitForElement(this.locator.nameField(), 10);
+    I.fillField(this.locator.nameField(), value);
   }
 
   clickSubmit() {

@@ -53,9 +53,18 @@ Scenario('rename file', async ({ I, rightPanel, explorer }) => {
   explorer.toggleFilter();
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
-  rightPanel.actionsTab.clickRenamePage();
-  rightPanel.renameModal.fillTitleField(newFilename);
-  rightPanel.renameModal.clickSubmit();
+  rightPanel.actionsTab.rename(newFilename);
   I.see(`${newFilename}.json`);
+  I.dontSee(`${filename}`);
+});
+
+Scenario('delete file', async ({ I, rightPanel, explorer }) => {
+  const filename = 'manifest.json';
+  const newFilename = utils.generateRandomName();
+
+  explorer.toggleFilter();
+  explorer.nodeInfo('file', filename);
+  rightPanel.openActionsTab();
+  rightPanel.actionsTab.delete();
   I.dontSee(`${filename}`);
 });

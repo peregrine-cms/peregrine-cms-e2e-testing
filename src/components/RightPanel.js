@@ -1,11 +1,9 @@
-const renameModal = require('./RenameModal');
 const actionsTab = require('./rightPanelTabs/ActionsTab');
 const { I } = inject();
 
 class RightPanel {
   constructor() {
     this.actionsTab = actionsTab;
-    this.renameModal = renameModal;
 
     this.locator = {
       container() {
