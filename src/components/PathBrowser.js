@@ -47,6 +47,7 @@ class PathBrowser {
   }
 
   select() {
+    I.wait(this.animation.in);
     I.click('select', this.locator.container())
     I.wait(this.animation.out)
   }

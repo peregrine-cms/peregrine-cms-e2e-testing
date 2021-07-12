@@ -60,11 +60,22 @@ Scenario('rename file', async ({ I, rightPanel, explorer }) => {
 
 Scenario('delete file', async ({ I, rightPanel, explorer }) => {
   const filename = 'manifest.json';
-  const newFilename = utils.generateRandomName();
 
   explorer.toggleFilter();
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
   rightPanel.actionsTab.delete();
   I.dontSee(`${filename}`);
+});
+
+Scenario('copy file', async ({ I, rightPanel, explorer }) => {
+  const filename = 'manifest.json';
+  const copyFilename = 'manifest-copy.json';
+
+  explorer.toggleFilter();
+  explorer.nodeInfo('file', filename);
+  rightPanel.openActionsTab();
+  rightPanel.actionsTab.copy();
+  I.see(`${filename}`);
+  I.see(`${copyFilename}`);
 });

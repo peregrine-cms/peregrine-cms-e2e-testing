@@ -1,5 +1,6 @@
 const renameModal = require('../RenameModal');
 const askUserModal = require('../AskUserModal');
+const pathBrowser = require('../PathBrowser');
 
 const { I } = inject();
 
@@ -21,6 +22,12 @@ class ActionsTab {
           .withText('delete')
           .as('delete-btn');
       },
+      copyBtn() {
+        return this.container()
+          .find('.action .icon')
+          .withText('content_copy')
+          .as('copy-btn');
+      },
     };
   }
 
@@ -40,6 +47,12 @@ class ActionsTab {
     I.waitForElement(this.locator.deleteBtn(), 10);
     I.click(this.locator.deleteBtn());
     askUserModal.confirm();
+  }
+
+  copy() {
+    I.waitForElement(this.locator.copyBtn(), 10);
+    I.click(this.locator.copyBtn());
+    pathBrowser.select();
   }
 }
 
