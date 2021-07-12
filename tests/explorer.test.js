@@ -45,3 +45,17 @@ Scenario('toggle "filter secondary items"', async ({ I, pagesPage }) => {
   pagesPage.explorer.toggleFilter();
   I.dontSee(filename);
 });
+
+Scenario('rename file', async ({ I, rightPanel, explorer }) => {
+  const filename = 'manifest.json';
+  const newFilename = utils.generateRandomName();
+
+  explorer.toggleFilter();
+  explorer.nodeInfo('file', filename);
+  rightPanel.openActionsTab();
+  rightPanel.actionsTab.clickRenamePage();
+  rightPanel.renameModal.fillTitleField(newFilename);
+  rightPanel.renameModal.clickSubmit();
+  I.see(`${newFilename}.json`);
+  I.dontSee(`${filename}`);
+});

@@ -1,7 +1,12 @@
+const renameModal = require('./RenameModal');
+const actionsTab = require('./rightPanelTabs/ActionsTab');
 const { I } = inject();
 
 class RightPanel {
   constructor() {
+    this.actionsTab = actionsTab;
+    this.renameModal = renameModal;
+
     this.locator = {
       container() {
         return locate('.explorer-preview');
@@ -17,6 +22,9 @@ class RightPanel {
       },
       infoTabBtn() {
         return this.nav().find('a').at(1).as('info-tab-btn');
+      },
+      actionsTabBtn() {
+        return this.nav().find('a').at(4).as('actions-tab-btn');
       },
       editBtn() {
         return this.footer()
@@ -57,6 +65,11 @@ class RightPanel {
   openInfoTab() {
     I.waitForElement(this.locator.infoTabBtn(), 10);
     I.click(this.locator.infoTabBtn());
+  }
+
+  openActionsTab() {
+    I.waitForElement(this.locator.actionsTabBtn(), 10);
+    I.click(this.locator.actionsTabBtn());
   }
 
   clickEditBtn() {

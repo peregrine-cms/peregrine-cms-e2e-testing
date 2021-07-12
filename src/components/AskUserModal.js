@@ -1,11 +1,10 @@
+const { BaseModal } = require('./bases/BaseModal');
+
 const { I } = inject();
 
-class AskUserModal {
+class AskUserModal extends BaseModal {
   constructor() {
-    this.animation = {
-      in: 0.3, //s
-      out: 0.2, //s
-    };
+    super();
     this.locator = {
       container() {
         return locate('#askUserModal').as('ask-user-modal');

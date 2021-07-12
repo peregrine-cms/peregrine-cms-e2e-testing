@@ -20,11 +20,6 @@ class PagesPage extends BaseNodePage {
     editPagePage.loaded();
   }
 
-  editFile(title) {
-    this.explorer.editNode('file', title);
-    fileEditor.loaded();
-  }
-
   seePage(title) {
     this.explorer.seeNode('page', title);
   }
