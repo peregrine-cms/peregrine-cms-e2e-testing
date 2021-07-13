@@ -40,6 +40,15 @@ class FileEditor {
           .find('.vue-codemirror-wrap > textarea')
           .as('textarea');
       },
+      menuBar() {
+        return this.container().find('.menu-bar').as('menu-bar');
+      },
+      formatSelectionBtn() {
+        return this.menuBar()
+          .find('.menu-action .icon')
+          .withText('code')
+          .as('format-selection-btn');
+      },
     };
   }
 
@@ -84,7 +93,8 @@ class FileEditor {
 
   autoFormat() {
     I.click(this.locator.code());
-    I.pressKey(['CommandOrControl', 'Alt', 'l']);
+    I.selectAll();
+    I.click(this.locator.formatSelectionBtn());
   }
 
   clickSave() {

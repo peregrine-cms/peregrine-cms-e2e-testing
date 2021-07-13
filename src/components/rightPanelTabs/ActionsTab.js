@@ -49,10 +49,13 @@ class ActionsTab {
     renameModal.clickSubmit();
   }
 
-  delete() {
+  delete(needsConfirmation = true) {
     I.waitForElement(this.locator.deleteBtn(), 10);
     I.click(this.locator.deleteBtn());
-    askUserModal.confirm();
+
+    if (needsConfirmation) {
+      askUserModal.confirm();
+    }
   }
 
   copy() {

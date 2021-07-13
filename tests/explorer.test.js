@@ -29,7 +29,8 @@ Scenario('open edit-page: item click', async ({ I, pagesPage }) => {
   I.seeInCurrentUrl(`/pages/${PAGE}`);
 });
 
-Scenario('open first "Home" reference', async ({ I, pagesPage }) => {
+//TODO: reference loading seems to be inconsistent
+Scenario.skip('open first "Home" reference', async ({ I, pagesPage }) => {
   pagesPage.explorer.nodeInfo('page', 'Home');
   pagesPage.explorer.rightPanel.openReferencesTab();
   pagesPage.explorer.rightPanel.clickReference(1);
@@ -58,14 +59,15 @@ Scenario('rename file', async ({ I, rightPanel, explorer }) => {
   I.dontSee(filename);
 });
 
-Scenario('delete file', async ({ I, rightPanel, explorer }) => {
+Scenario('move file', async ({ I, rightPanel, explorer }) => {
   const filename = 'manifest.json';
 
   explorer.toggleFilter();
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
-  rightPanel.actionsTab.delete();
-  I.dontSee(filename);
+  await rightPanel.actionsTab.move('js');
+  I.seeInCurrentUrl(`path:/content/${TENANT}/pages/js`);
+  I.see(filename);
 });
 
 Scenario('copy file', async ({ I, rightPanel, explorer }) => {
@@ -79,6 +81,7 @@ Scenario('copy file', async ({ I, rightPanel, explorer }) => {
   rightPanel.actionsTab.copy();
   I.see(filename);
   I.see(copyFilename);
+  //second copy
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
   rightPanel.actionsTab.copy();
@@ -87,13 +90,12 @@ Scenario('copy file', async ({ I, rightPanel, explorer }) => {
   I.see(copy2Filename);
 });
 
-Scenario('move file', async ({ I, rightPanel, explorer }) => {
+Scenario('delete file', async ({ I, rightPanel, explorer }) => {
   const filename = 'manifest.json';
 
   explorer.toggleFilter();
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
-  await rightPanel.actionsTab.move('js');
-  I.seeInCurrentUrl(`path:/content/${TENANT}/pages/js`);
-  I.see(filename);
+  rightPanel.actionsTab.delete();
+  I.dontSee(filename);
 });

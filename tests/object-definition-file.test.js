@@ -40,6 +40,8 @@ Scenario('view', async ({ I, objectDefinitionsPage }) => {
 });
 
 Scenario('delete', async ({ objectDefinitionsPage }) => {
-  await objectDefinitionsPage.deleteFile(FILE);
-  objectDefinitionsPage.dontSeeFile(FILE);
+  const filename = 'dialog';
+
+  await objectDefinitionsPage.deleteFile(filename);
+  objectDefinitionsPage.dontSeeFile(filename);
 });

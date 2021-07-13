@@ -22,7 +22,7 @@ class RightPanel {
         return this.nav().find('a').at(1).as('info-tab-btn');
       },
       actionsTabBtn() {
-        return this.nav().find('a').at(4).as('actions-tab-btn');
+        return this.nav().find('a .icon').withText('more_vert').as('actions-tab-btn');
       },
       editBtn() {
         return this.footer()

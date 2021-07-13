@@ -10,7 +10,9 @@ const FEATURE_NAME = utils.toFeatureName(__filename);
 let TENANT;
 const PAGE = FEATURE_NAME;
 const TEST_CODE = `const foo = {bar: 0};`;
-const TEST_CODE_FORMATTED = `const foo = {\n  bar: 0};\n`;
+const TEST_CODE_FORMATTED = `const foo = {
+  bar: 0};
+`;
 
 Feature(FEATURE_NAME);
 
@@ -47,7 +49,6 @@ Scenario('auto-format', async ({ fileEditor, I }) => {
   await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
   await fileEditor.fillCode(TEST_CODE);
   await fileEditor.seeCode(TEST_CODE);
-  await I.selectAll();
   await fileEditor.autoFormat();
   await fileEditor.seeCode(TEST_CODE_FORMATTED);
 });
@@ -90,4 +91,62 @@ Scenario('exit (no changes)', async ({ fileEditor, pagesPage }) => {
   await pagesPage.seePage('Home');
   await fileEditor.load(`/content/${TENANT}/pages/manifest.json`);
   await fileEditor.seeCode(code);
+});
+
+Scenario('rename file', async ({ I, fileEditor, rightPanel, explorer }) => {
+  const filename = `manifest.json`;
+  const newFilename = utils.generateRandomName();
+
+  await fileEditor.load(`/content/${TENANT}/pages/${filename}`);
+  await rightPanel.openActionsTab();
+  await rightPanel.actionsTab.rename(newFilename);
+  await I.seeInCurrentUrl(`path:/content/${TENANT}/pages`);
+  await explorer.toggleFilter();
+  await I.dontSee(filename);
+  await I.see(`${newFilename}.json`);
+});
+
+Scenario('move file', async ({ I, fileEditor, rightPanel, explorer }) => {
+  const filename = `manifest.json`;
+
+  await fileEditor.load(`/content/${TENANT}/pages/${filename}`);
+  await rightPanel.openActionsTab();
+  await rightPanel.actionsTab.move('templates');
+  await I.seeInCurrentUrl(`path:/content/${TENANT}/templates`);
+  await explorer.toggleFilter();
+  await I.see(filename);
+});
+
+Scenario('copy file', async ({ I, fileEditor, rightPanel, explorer }) => {
+  const filename = `manifest.json`;
+  const copyFilename = 'manifest-copy.json';
+  const copy2Filename = 'manifest-copy-2.json';
+
+  await fileEditor.load(`/content/${TENANT}/pages/${filename}`);
+  await rightPanel.openActionsTab();
+  await rightPanel.actionsTab.copy();
+  await I.seeInCurrentUrl(`path:/content/${TENANT}/pages`);
+  await explorer.toggleFilter();
+  await I.see(filename);
+  await I.see(copyFilename);
+  //second-copy
+  await fileEditor.load(`/content/${TENANT}/pages/${filename}`);
+  await rightPanel.openActionsTab();
+  await rightPanel.actionsTab.copy();
+  await I.seeInCurrentUrl(`path:/content/${TENANT}/pages`);
+  await explorer.toggleFilter();
+  await I.see(filename);
+  await I.see(copyFilename);
+  await I.see(copy2Filename);
+});
+
+Scenario('delete file', async ({ I, fileEditor, rightPanel, explorer }) => {
+  const filename = `manifest.json`;
+
+  await fileEditor.load(`/content/${TENANT}/pages/${filename}`);
+  await rightPanel.openActionsTab();
+  await rightPanel.actionsTab.delete(false);
+  await I.seeInCurrentUrl(`path:/content/${TENANT}/pages`);
+  await explorer.toggleFilter();
+  await I.dontSee(filename);
 });
