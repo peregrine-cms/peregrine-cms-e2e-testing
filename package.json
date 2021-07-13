@@ -15,9 +15,8 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "test": "npm run test:headless",
-    "test:headless": "cross-env HEADLESS=true codeceptjs run --steps",
-    "test:headful": "codeceptjs run --steps",
+    "test": "cross-env HEADLESS=true && codeceptjs run",
+    "test:headful": "cross-env HEADLESS=false && codeceptjs run",
     "test:ui": "codecept-ui --app"
   },
   "repository": {
