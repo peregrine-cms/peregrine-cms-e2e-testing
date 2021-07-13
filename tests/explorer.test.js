@@ -68,9 +68,10 @@ Scenario('delete file', async ({ I, rightPanel, explorer }) => {
   I.dontSee(`${filename}`);
 });
 
-Scenario('copy file', async ({ I, rightPanel, explorer }) => {
+Scenario.only('copy file', async ({ I, rightPanel, explorer }) => {
   const filename = 'manifest.json';
   const copyFilename = 'manifest-copy.json';
+  const copy2Filename = 'manifest-copy-2.json';
 
   explorer.toggleFilter();
   explorer.nodeInfo('file', filename);
@@ -78,4 +79,10 @@ Scenario('copy file', async ({ I, rightPanel, explorer }) => {
   rightPanel.actionsTab.copy();
   I.see(`${filename}`);
   I.see(`${copyFilename}`);
+  explorer.nodeInfo('file', filename);
+  rightPanel.openActionsTab();
+  rightPanel.actionsTab.copy();
+  I.see(`${filename}`);
+  I.see(`${copyFilename}`);
+  I.see(`${copy2Filename}`);
 });
