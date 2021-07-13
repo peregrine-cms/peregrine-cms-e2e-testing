@@ -1,11 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const users = require('./resources/users.json');
-const { setHeadlessWhen } = require('@codeceptjs/configure');
-
-// turn on headless mode when running with HEADLESS=true environment variable
-// export HEADLESS=true && npx codeceptjs run
-setHeadlessWhen(process.env.HEADLESS);
 
 const MODULES_PATH = (exports.config = {
   tests: './tests/*.js',
@@ -14,7 +9,7 @@ const MODULES_PATH = (exports.config = {
   helpers: {
     Playwright: {
       url: process.env.CODECEPT_URL || 'http://localhost:8080',
-      show: true,
+      show: !process.env.HEADLESS,
       browser: 'chromium',
       windowSize: '1900x1080',
       keepCookies: true,
