@@ -55,7 +55,7 @@ Scenario('rename file', async ({ I, rightPanel, explorer }) => {
   rightPanel.openActionsTab();
   rightPanel.actionsTab.rename(newFilename);
   I.see(`${newFilename}.json`);
-  I.dontSee(`${filename}`);
+  I.dontSee(filename);
 });
 
 Scenario('delete file', async ({ I, rightPanel, explorer }) => {
@@ -65,10 +65,10 @@ Scenario('delete file', async ({ I, rightPanel, explorer }) => {
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
   rightPanel.actionsTab.delete();
-  I.dontSee(`${filename}`);
+  I.dontSee(filename);
 });
 
-Scenario.only('copy file', async ({ I, rightPanel, explorer }) => {
+Scenario('copy file', async ({ I, rightPanel, explorer }) => {
   const filename = 'manifest.json';
   const copyFilename = 'manifest-copy.json';
   const copy2Filename = 'manifest-copy-2.json';
@@ -77,12 +77,23 @@ Scenario.only('copy file', async ({ I, rightPanel, explorer }) => {
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
   rightPanel.actionsTab.copy();
-  I.see(`${filename}`);
-  I.see(`${copyFilename}`);
+  I.see(filename);
+  I.see(copyFilename);
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
   rightPanel.actionsTab.copy();
-  I.see(`${filename}`);
-  I.see(`${copyFilename}`);
-  I.see(`${copy2Filename}`);
+  I.see(filename);
+  I.see(copyFilename);
+  I.see(copy2Filename);
+});
+
+Scenario('move file', async ({ I, rightPanel, explorer }) => {
+  const filename = 'manifest.json';
+
+  explorer.toggleFilter();
+  explorer.nodeInfo('file', filename);
+  rightPanel.openActionsTab();
+  await rightPanel.actionsTab.move('js');
+  I.seeInCurrentUrl(`path:/content/${TENANT}/pages/js`);
+  I.see(filename);
 });

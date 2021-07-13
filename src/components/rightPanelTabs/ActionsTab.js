@@ -28,6 +28,12 @@ class ActionsTab {
           .withText('content_copy')
           .as('copy-btn');
       },
+      moveBtn() {
+        return this.container()
+          .find('.action .icon')
+          .withText('compare_arrows')
+          .as('move-btn');
+      },
     };
   }
 
@@ -52,6 +58,13 @@ class ActionsTab {
   copy() {
     I.waitForElement(this.locator.copyBtn(), 10);
     I.click(this.locator.copyBtn());
+    pathBrowser.select();
+  }
+
+  async move(to) {
+    I.waitForElement(this.locator.moveBtn(), 10);
+    I.click(this.locator.moveBtn());
+    await pathBrowser.selectBrowseEntry(to);
     pathBrowser.select();
   }
 }
