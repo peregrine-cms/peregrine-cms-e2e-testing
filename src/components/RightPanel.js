@@ -1,9 +1,11 @@
 const actionsTab = require('./rightPanelTabs/ActionsTab');
+const webPublishingTab = require('./rightPanelTabs/WebPublishingTab');
 const { I } = inject();
 
 class RightPanel {
   constructor() {
     this.actionsTab = actionsTab;
+    this.webPublishingTab = webPublishingTab;
 
     this.locator = {
       container() {
@@ -22,7 +24,10 @@ class RightPanel {
         return this.nav().find('a').at(1).as('info-tab-btn');
       },
       actionsTabBtn() {
-        return this.nav().find('a .icon').withText('more_vert').as('actions-tab-btn');
+        return this.nav()
+          .find('a .icon')
+          .withText('more_vert')
+          .as('actions-tab-btn');
       },
       editBtn() {
         return this.footer()
@@ -48,6 +53,12 @@ class RightPanel {
           .find('a')
           .as(`reference no. ${position}`);
       },
+      webPublishingTabBtn() {
+        return this.container()
+          .find('a .icon')
+          .withText('public')
+          .as('publish-tab-btn');
+      },
     };
   }
 
@@ -68,6 +79,11 @@ class RightPanel {
   openActionsTab() {
     I.waitForElement(this.locator.actionsTabBtn(), 10);
     I.click(this.locator.actionsTabBtn());
+  }
+
+  openWebPublishingTab() {
+    I.waitForElement(this.locator.webPublishingTabBtn(), 10);
+    I.click(this.locator.webPublishingTabBtn());
   }
 
   clickEditBtn() {

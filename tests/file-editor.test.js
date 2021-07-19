@@ -150,3 +150,17 @@ Scenario('delete file', async ({ I, fileEditor, rightPanel, explorer }) => {
   await explorer.toggleFilter();
   await I.dontSee(filename);
 });
+
+Scenario(
+  'publish file',
+  async ({ I, fileEditor, rightPanel, publishingModal }) => {
+    const filename = `manifest.json`;
+
+    await fileEditor.load(`/content/${TENANT}/pages/${filename}`);
+    await rightPanel.openWebPublishingTab();
+    await rightPanel.webPublishingTab.clickPublishToWeb();
+    await publishingModal.clickSubmit();
+    await I.waitForVisible('#notifyUserModal', 60); //wait for timeout warning!
+    await I.see('Action timed out when publishing');
+  }
+);

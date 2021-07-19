@@ -39,6 +39,7 @@ const MODULES_PATH = (exports.config = {
     toast: './src/components/Toast',
     explorer: './src/components/Explorer',
     rightPanel: './src/components/RightPanel',
+    publishingModal: './src/components/PublishingModal',
   },
   async teardown() {
     const outputDir = path.join(__dirname, exports.config.output);
