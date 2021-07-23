@@ -25,9 +25,9 @@ class ObjectDefinitionsPage extends BaseNodePage {
   }
 
   async addFile(name, template = 'ui-schema') {
-    await I.click('add file');
-    await I.waitForText('Create File', 10);
-    await I.fillField('Filename', name);
+    await I.click('add ui-schema');
+    await I.waitForText('Create UI-Schema', 10);
+    await I.fillField('ui-schema name', name);
     await I.click('Next');
     await I.waitForText('Insert template');
     await I.click(template);

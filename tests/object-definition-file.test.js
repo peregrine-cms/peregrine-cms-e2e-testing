@@ -31,7 +31,7 @@ Before(async ({ objectDefinitionsPage }) => {
 
 Scenario('add', async ({ objectDefinitionsPage }) => {
   await objectDefinitionsPage.addFile(FILE);
-  objectDefinitionsPage.seeFile(FILE);
+  await objectDefinitionsPage.seeFile(FILE);
 });
 
 Scenario('view', async ({ I, objectDefinitionsPage }) => {
