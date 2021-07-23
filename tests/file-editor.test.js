@@ -93,7 +93,7 @@ Scenario('exit (no changes)', async ({ fileEditor, pagesPage }) => {
   await fileEditor.seeCode(code);
 });
 
-Scenario.only(
+Scenario(
   'rename file',
   async ({ I, fileEditor, rightPanel, explorer, renameModal }) => {
     const filename = `manifest.json`;
