@@ -87,8 +87,7 @@ class EditView {
 
   openEditImageModal(src) {
     I.switchTo(this.locator.frame())
-    I.seeElement(this.locator.img(src))
-    I.waitForClickable(this.locator.img(src))
+    I.seeElement(this.locator.img(src));
     I.doubleClick(this.locator.img(src))
     I.wait(this.modal.animation.in)
     I.switchTo()
@@ -108,6 +107,12 @@ class EditView {
             selector).contentWindow.getSelection().getRangeAt(0).endOffset
       }
     }, '#editview')
+  }
+
+  seeElementInDOM(locator) {
+    I.switchTo(this.locator.frame());
+    I.seeElementInDOM(locator);
+    I.switchTo();
   }
 }
 

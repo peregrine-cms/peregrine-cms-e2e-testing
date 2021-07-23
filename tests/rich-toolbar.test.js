@@ -28,11 +28,11 @@ After(({ perApi }) => {
   perApi.deleteTenant(TENANT);
 });
 
-Scenario('insert icon', ({ editPagePage }) => {
+Scenario.only('insert icon', ({ editPagePage, editView }) => {
   const iconName = 'launcher-icon-1x';
 
   editPagePage.richToolbar.insertIcon(iconName);
-  editPagePage.editView.containsText(`[icon:${iconName}]`);
+  editView.seeElementInDOM(locate('peregrine-icon').as('peregrine-icon'));
 });
 
 Scenario('insert image', async ({ editPagePage }) => {

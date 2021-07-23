@@ -49,6 +49,7 @@ exports.config = {
     rightPanel: `${COMPONENTS_PATH}/RightPanel`,
     publishingModal: `${COMPONENTS_PATH}/PublishingModal`,
     renameModal: `${COMPONENTS_PATH}/RenameModal`,
+    editView: `${COMPONENTS_PATH}/EditView`
   },
   async teardown() {
     const outputDir = path.join(__dirname, exports.config.output);
