@@ -93,18 +93,24 @@ Scenario('exit (no changes)', async ({ fileEditor, pagesPage }) => {
   await fileEditor.seeCode(code);
 });
 
-Scenario('rename file', async ({ I, fileEditor, rightPanel, explorer }) => {
-  const filename = `manifest.json`;
-  const newFilename = utils.generateRandomName();
+Scenario.only(
+  'rename file',
+  async ({ I, fileEditor, rightPanel, explorer, renameModal }) => {
+    const filename = `manifest.json`;
+    const newFilename = utils.generateRandomName();
 
-  await fileEditor.load(`/content/${TENANT}/pages/${filename}`);
-  await rightPanel.openActionsTab();
-  await rightPanel.actionsTab.rename(newFilename);
-  await I.seeInCurrentUrl(`path:/content/${TENANT}/pages`);
-  await explorer.toggleFilter();
-  await I.dontSee(filename);
-  await I.see(`${newFilename}.json`);
-});
+    await fileEditor.load(`/content/${TENANT}/pages/${filename}`);
+    await rightPanel.openActionsTab();
+    await rightPanel.actionsTab.rename(newFilename, newFilename + '$');
+    await I.see('File names may only contain', 'span');
+    await renameModal.fillNameField(newFilename);
+    await renameModal.clickSubmit();
+    await I.seeInCurrentUrl(`path:/content/${TENANT}/pages`);
+    await explorer.toggleFilter();
+    await I.dontSee(filename);
+    await I.see(`${newFilename}.json`);
+  }
+);
 
 Scenario('move file', async ({ I, fileEditor, rightPanel, explorer }) => {
   const filename = `manifest.json`;

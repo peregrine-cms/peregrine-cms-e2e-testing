@@ -47,14 +47,17 @@ Scenario('toggle "filter secondary items"', async ({ I, pagesPage }) => {
   I.dontSee(filename);
 });
 
-Scenario('rename file', async ({ I, rightPanel, explorer }) => {
+Scenario('rename file', async ({ I, rightPanel, explorer, renameModal }) => {
   const filename = 'manifest.json';
   const newFilename = utils.generateRandomName();
 
   explorer.toggleFilter();
   explorer.nodeInfo('file', filename);
   rightPanel.openActionsTab();
-  rightPanel.actionsTab.rename(newFilename);
+  rightPanel.actionsTab.rename(newFilename, newFilename + '$');
+  I.see('File names may only contain', 'span');
+  renameModal.fillNameField(newFilename);
+  renameModal.clickSubmit();
   I.see(`${newFilename}.json`);
   I.dontSee(filename);
 });

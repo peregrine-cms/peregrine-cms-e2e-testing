@@ -1,8 +1,7 @@
-const renameModal = require('../RenameModal');
 const askUserModal = require('../AskUserModal');
 const pathBrowser = require('../PathBrowser');
 
-const { I } = inject();
+const { I, renameModal } = inject();
 
 class ActionsTab {
   constructor() {
