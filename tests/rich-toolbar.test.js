@@ -28,7 +28,7 @@ After(({ perApi }) => {
   perApi.deleteTenant(TENANT);
 });
 
-Scenario.only('insert icon', ({ editPagePage, editView }) => {
+Scenario('insert icon', ({ editPagePage, editView }) => {
   const iconName = 'launcher-icon-1x';
 
   editPagePage.richToolbar.insertIcon(iconName);
