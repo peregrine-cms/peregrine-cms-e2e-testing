@@ -9,6 +9,8 @@ setHeadlessWhen(process.env.HEADLESS);
 
 exports.config = {
   tests: './tests/*.js',
+  // tests: './tests/graphiql.js',
+  // tests: './tests/graphql.js',
   output: `./output`,
   verbose: true,
   helpers: {
@@ -26,6 +28,14 @@ exports.config = {
       defaultHeaders: {
         auth: users.admin
       }
+    },
+    ExtendedRest2: {
+      require: './src/helpers/ExtendedRest2.js',
+      endpoint: 'http://localhost:8080',
+      withCredentials: true,
+      defaultHeaders: {
+        auth: users.admin
+      }
     }
   },
   include: {
@@ -38,7 +48,9 @@ exports.config = {
     pagesPage: './src/pages/PagesPage',
     assetsPage: './src/pages/AssetsPage',
     objectsPage: './src/pages/ObjectsPage',
-    templatesPage: './src/pages/TemplatesPage'
+    templatesPage: './src/pages/TemplatesPage',
+    graphiqlPage: './src/pages/GraphiQLPage',
+    graphql: './src/modules/graphql'
   },
   async teardown() {
     const outputDir = path.join(__dirname, exports.config.output)
@@ -56,7 +68,7 @@ exports.config = {
       enabled: true
     },
     tryTo: {
-      enabled: false
+      enabled: true
     },
     screenshotOnFail: {
       enabled: true
