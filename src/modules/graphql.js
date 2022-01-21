@@ -60,6 +60,30 @@ class graphql {
     return answer
   }
 
+  createByPathQuery(tenant, objectTypePrefix, objectName, fieldAndValues) {
+    let answer = {}
+    let query = 'query {\n' +
+      `  ${objectTypePrefix}ByPath(_path: "/content/${tenant}/objects/${objectName}") {\n` +
+      '    item {\n';
+    for(let field of fieldAndValues.fields) {
+      query += `      ${field}\n`
+    }
+    query += '    }\n' +
+      '  }\n' +
+      '}'
+    answer.query = query
+    let expected =`{"data":{"${objectTypePrefix}ByPath":{"item":[`;
+    for(let i = 0; i < fieldAndValues.fields.length; i++) {
+        let field = fieldAndValues.fields[i]
+        let value = fieldAndValues.values[i]
+        expected += '"' + field + '":"' + value + '",'
+    }
+    if(expected.endsWith(',')) { expected = expected.substring(0, expected.length - 1) }
+    expected += ']}}}'
+    answer.expected = expected
+    return answer
+  }
+
   checkQueryResult(result, expected) {
     if (result !== null) {
       console.log(`Query Result: ${result}`)

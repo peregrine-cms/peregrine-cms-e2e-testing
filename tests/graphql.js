@@ -18,18 +18,11 @@ Feature(FEATURE_NAME)
 Before(async ({loginAs, perApi, pagesPage, graphql}) => {
   TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
-  let i = 1;
-  await graphql.createObjectFromDefinitions(
-    perApi, TENANT, `${OBJECT_NAME_PREFIX}-${i}`, CONTACT_OBJECT_DEFINITIONS_NAME, {'email': `test-${i}@test.com`, 'text': `Hi There ${i}`}
-  )
-  i++
-  await graphql.createObjectFromDefinitions(
-    perApi, TENANT, `${OBJECT_NAME_PREFIX}-${i}`, CONTACT_OBJECT_DEFINITIONS_NAME, {'email': `test-${i}@test.com`, 'text': `Hi There ${i}`}
-  )
-  i++
-  await graphql.createObjectFromDefinitions(
-    perApi, TENANT, `${OBJECT_NAME_PREFIX}-${i}`, CONTACT_OBJECT_DEFINITIONS_NAME, {'email': `test-${i}@test.com`, 'text': `Hi There ${i}`}
-  )
+  for(let i = 0; i < 3; i++) {
+    await graphql.createObjectFromDefinitions(
+      perApi, TENANT, `${OBJECT_NAME_PREFIX}-${i}`, CONTACT_OBJECT_DEFINITIONS_NAME, {'email': `test-${i}@test.com`, 'text': `Hi There ${i}`}
+    )
+  }
   await graphql.createObjectFromDefinitions( perApi, TENANT, `${OBJECT_NAME_PREFIX}-4`, ALL_OBJECT_DEFINITIONS_NAME)
   await graphql.createObjectFromDefinitions( perApi, TENANT, `${OBJECT_NAME_PREFIX}-5`, ALL_OBJECT_DEFINITIONS_NAME)
   await loginAs('admin')
@@ -37,12 +30,9 @@ Before(async ({loginAs, perApi, pagesPage, graphql}) => {
 })
 
 After(async ({perApi}) => {
-  let i = 1;
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-${i++}`)
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-${i++}`)
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-${i++}`)
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-${i++}`)
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-${i++}`)
+  for(let i = 0; i < 5; i++) {
+    await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-${i}`)
+  }
   await perApi.deleteTenant(TENANT)
 })
 
@@ -73,3 +63,18 @@ Scenario('Check GraphQL Query over All Form List',
     graphql.checkQueryResult(queryResult, listQuery.expected)
   }
 )
+
+Scenario('Check GraphQL Query of Contact By Path',
+  async ({I, graphql}) => {
+    let fieldAndValues = {
+      fields: ['_path', 'number'],
+      values: [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-2`, 'null']
+    }
+    let byPathQuery = graphql.createByPathQuery(
+      TENANT, ALL_OBJECT_TYPE_PREFIX, `${OBJECT_NAME_PREFIX}-2`, fieldAndValues
+    )
+    let queryResult = await graphql.executeQuery(
+      TENANT, byPathQuery.query
+    )
+    graphql.checkQueryResult(queryResult, byPathQuery.expected)
+})

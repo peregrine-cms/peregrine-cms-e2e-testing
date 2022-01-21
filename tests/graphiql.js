@@ -21,18 +21,11 @@ Before(async ({loginAs, perApi, pagesPage, graphiqlPage, graphql}) => {
   const map = new Map()
   map.set('email', 'test@test1.com')
   map.set('text', 'Hi, this is me')
-  let i = 1;
-  await graphql.createObjectFromDefinitions(
-    perApi, TENANT, `${OBJECT_NAME_PREFIX}-${i}`, CONTACT_OBJECT_DEFINITIONS_NAME, {'email': `test-${i}@test.com`, 'text': `Hi There ${i}`}
-  )
-  i++
-  await graphql.createObjectFromDefinitions(
-    perApi, TENANT, `${OBJECT_NAME_PREFIX}-${i}`, CONTACT_OBJECT_DEFINITIONS_NAME, {'email': `test-${i}@test.com`, 'text': `Hi There ${i}`}
-  )
-  i++
-  await graphql.createObjectFromDefinitions(
-    perApi, TENANT, `${OBJECT_NAME_PREFIX}-${i}`, CONTACT_OBJECT_DEFINITIONS_NAME, {'email': `test-${i}@test.com`, 'text': `Hi There ${i}`}
-  )
+  for(let i = 1; i <= 3; i++) {
+    await graphql.createObjectFromDefinitions(
+      perApi, TENANT, `${OBJECT_NAME_PREFIX}-${i}`, CONTACT_OBJECT_DEFINITIONS_NAME, {'email': `test-${i}@test.com`, 'text': `Hi There ${i}`}
+    )
+  }
   await graphql.createObjectFromDefinitions( perApi, TENANT, `${OBJECT_NAME_PREFIX}-4`, ALL_OBJECT_DEFINITIONS_NAME)
   await graphql.createObjectFromDefinitions( perApi, TENANT, `${OBJECT_NAME_PREFIX}-5`, ALL_OBJECT_DEFINITIONS_NAME)
   await loginAs('admin')
@@ -40,11 +33,9 @@ Before(async ({loginAs, perApi, pagesPage, graphiqlPage, graphql}) => {
 })
 
 After(async ({perApi}) => {
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-1`)
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-2`)
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-3`)
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-4`)
-  await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-5`)
+  for(let i = 1; i <= 5; i++) {
+    await perApi.deleteObject(TENANT, `${OBJECT_NAME_PREFIX}-${i}`)
+  }
   await perApi.deleteTenant(TENANT)
 })
 
