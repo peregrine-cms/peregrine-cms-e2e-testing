@@ -1,10 +1,14 @@
 const BaseNodePage = require('./bases/BaseNodePage')
+// const rightPanel = require('../components/RightPanel')
 const {I} = inject()
 
 class ObjectsPage extends BaseNodePage {
 
+  // rightPanel
+
   constructor() {
     super()
+    // this.rightPanel = rightPanel
 
     this.locator = {
       container() {
@@ -22,12 +26,16 @@ class ObjectsPage extends BaseNodePage {
     return `/content/admin/pages/objects.html/path:/content/${tenant}/objects`
   }
 
-  deleteObject(title) {
-    this.explorer.deleteNode('object', title)
+  async deleteObject(title) {
+    await this.explorer.deleteNode('object', title)
   }
 
-  editObject(title) {
-    this.explorer.editNode('object', title)
+  async editObject(title) {
+    await this.explorer.editNode('object', title)
+  }
+
+  async saveChanges(title) {
+    await this.explorer.saveChanges('object', title)
   }
 }
 

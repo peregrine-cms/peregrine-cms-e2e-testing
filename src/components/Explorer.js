@@ -32,19 +32,28 @@ class Explorer {
     }
   }
 
-  nodeInfo(type, title) {
-    I.click(this.locator.infoBtn(type, title))
+  async saveChanges(type, title) {
+    await I.waitForElement(this.locator.infoBtn(type, title), 5)
+    await I.click(this.locator.infoBtn(type, title))
+    await this.askUserModal.save()
   }
 
-  deleteNode(type, title) {
-    I.waitForElement(this.locator.deleteButton(type, title), 5)
-    I.click(this.locator.deleteButton(type, title))
-    this.askUserModal.confirm()
-    I.dontSeeElement(this.locator.deleteButton(type, title))
+  async nodeInfo(type, title) {
+    await I.waitForElement(this.locator.infoBtn(type, title), 5)
+    // I.moveCursorTo(this.locator.infoBtn(type, title))
+    // I.doubleClick(this.locator.infoBtn(type, title))
+    await I.click(this.locator.infoBtn(type, title))
   }
 
-  editNode(type, title) {
-    I.click(this.locator.editButton(type, title))
+  async deleteNode(type, title) {
+    await I.waitForElement(this.locator.deleteButton(type, title), 5)
+    await I.click(this.locator.deleteButton(type, title))
+    await this.askUserModal.confirm()
+    await I.dontSeeElement(this.locator.deleteButton(type, title))
+  }
+
+  async editNode(type, title) {
+    await I.click(this.locator.editButton(type, title))
   }
 }
 

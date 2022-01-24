@@ -4,6 +4,7 @@
  */
 
 const {Object} = require('../src/const')
+const {setup} = require('../src/modules/setup')
 
 const FEATURE_NAME = 'objects'
 const TENANT = 'example'
@@ -11,9 +12,11 @@ const OBJECT_NAME = 'e2e-test-objects'
 
 Feature(FEATURE_NAME)
 
-Before(async ({loginAs, perApi, objectsPage}) => {
+Before(async ({I, loginAs, perApi, objectsPage}) => {
+  await setup()
   await perApi.createObject(TENANT, OBJECT_NAME, 'example/objects/collection')
   await loginAs('admin')
+  await I.wait(3)
   await objectsPage.navigate(TENANT)
 })
 
@@ -40,18 +43,27 @@ Scenario('remove all items from collection',
             'list': [{'name': 'n1234567890', 'key': 'foo', 'value': 'bar'}]
           }
       )
-      I.refreshPage()
-      objectsPage.editObject(OBJECT_NAME)
-      rightPanel.openInfoTab()
-      rightPanel.clickEditBtn()
-      I.click(deleteBtnLocator)
-      rightPanel.clickSaveBtn()
-      I.seeInPopup('save edit?')
-      I.acceptPopup()
-      /*
-      This is not supposed to happen. wait-mask should fade after finish loading
-      see issue #254 or more information
-       */
-      I.seeElement(locate('#waitMask').as('waiting-mask'))
-      pause()
+      await I.wait(5)
+      await I.refreshPage()
+      await objectsPage.editObject(OBJECT_NAME)
+      await rightPanel.openInfoTab()
+      //AS TODO: no more dialogs so this does not work
+      // await rightPanel.clickEditBtn()
+      // await I.wait(5)
+      await I.click(deleteBtnLocator)
+      //AS TODO: no more dialogs so this does not work - for now we switch the UI to trigger the save dialog
+      // await I.wait(5)
+      //AS TODO: No more Save Button -> switch
+      // await rightPanel.clickSaveBtn()
+      // await I.seeInPopup('save edit?')
+      // await I.acceptPopup()
+      await objectsPage.saveChanges(OBJECT_NAME)
+      await I.wait(20)
+
+      // /*
+      // This is not supposed to happen. wait-mask should fade after finish loading
+      // see issue #254 or more information
+      //  */
+      // await I.seeElement(locate('#waitMask').as('waiting-mask'))
+      // pause()
     })

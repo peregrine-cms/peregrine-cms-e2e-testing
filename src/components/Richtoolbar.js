@@ -45,31 +45,31 @@ class RichToolbar {
   async togglePreview() {
     const cls = await I.grabAttributeFrom(this.locator.previewBtn(), 'class')
     const isActive = cls.split(' ').includes('active')
-    I.click(this.locator.previewBtn())
-    I.moveCursorTo(this.locator.container(), 500, 500)
-    I.wait(BTN_TRANSITION)
-    I.seeCssPropertiesOnElements(this.locator.previewBtn(), {
+    await I.click(this.locator.previewBtn())
+    await I.moveCursorTo(this.locator.container(), 500, 500)
+    await I.wait(BTN_TRANSITION)
+    await I.seeCssPropertiesOnElements(this.locator.previewBtn(), {
       'background-color': !isActive ? ACTIVE_BTN_BG_COLOR : INACTIVE_BTN_BG_COLOR
     })
   }
 
   async openPreviewInNewTab(tenant, page) {
-    I.click(this.locator.previewBtn(true))
-    I.switchToNextTab()
-    I.seeInCurrentUrl(`/content/${tenant}/pages/${page}.html`)
+    await I.click(this.locator.previewBtn(true))
+    await I.switchToNextTab()
+    await I.seeInCurrentUrl(`/content/${tenant}/pages/${page}.html`)
   }
 
-  insertIcon(name) {
-    I.click(this.locator.toggle('icons'))
-    I.wait(this.dropDown.animation.in)
-    I.see(name)
-    I.click(this.locator.iconItem(name))
-    I.wait(this.dropDown.animation.out)
+  async insertIcon(name) {
+    await I.click(this.locator.toggle('icons'))
+    await I.wait(this.dropDown.animation.in)
+    await I.see(name)
+    await I.click(this.locator.iconItem(name))
+    await I.wait(this.dropDown.animation.out)
   }
 
-  openImageBrowser() {
-    I.click(this.locator.toggle('image'))
-    I.wait(this.modal.animation.in)
+  async openImageBrowser() {
+    await I.click(this.locator.toggle('image'))
+    await I.wait(this.modal.animation.in)
   }
 }
 

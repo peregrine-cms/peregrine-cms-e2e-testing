@@ -12,7 +12,6 @@ class graphql {
   }
 
   async executeQuery(tenant, queryString) {
-    console.log(`Execute Query, tenant: ${tenant}, query: ${queryString}`)
     let response = await I.sendRestRequest2(
         Request.build()
           .withUrl(`/content/${tenant}.gql`)
@@ -25,7 +24,6 @@ class graphql {
           .as(`Execute Query on Tenant: "${tenant}"`)
     )
     let answer = JSON.stringify(response.data)
-    console.log(`Response Data from GraphQL: ${answer}`)
     return answer
   }
 
@@ -86,9 +84,7 @@ class graphql {
 
   checkQueryResult(result, expected) {
     if (result !== null) {
-      console.log(`Query Result: ${result}`)
       result = result.replace(/\s+/g, '')
-      console.log(`Space Removed: Query Result: ${result}`)
       if (expected.length !== result.length) {
         throw new Error(`Result does not have the expected length, expected:\n\n'${expected}'\n\nfound:\n\n'${result}'\n\n`)
       }

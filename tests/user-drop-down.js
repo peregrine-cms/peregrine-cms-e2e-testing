@@ -12,15 +12,16 @@ let TENANT
 
 Feature(FEATURE_NAME)
 
-Before(async ({ loginAs, perApi, assetsPage }) => {
+Before(async ({ I, loginAs, perApi, assetsPage }) => {
   TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   await loginAs('admin')
-  assetsPage.navigate(TENANT)
+  await I.wait(3)
+  await assetsPage.navigate(TENANT)
 })
 
-After(({ perApi }) => {
-  perApi.deleteTenant(TENANT)
+After(async ({ perApi }) => {
+  await perApi.deleteTenant(TENANT)
 })
 
 Scenario('copy username', async ({ welcomePage, I }) => {

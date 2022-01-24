@@ -11,21 +11,25 @@ const PAGE = FEATURE_NAME
 
 Feature(FEATURE_NAME)
 
-Before(async ({ loginAs, perApi, pagesPage, editPagePage }) => {
+Before(async ({ I, loginAs, perApi, pagesPage, editPagePage }) => {
   TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   await perApi.createPage(TENANT, PAGE)
   await loginAs('admin')
-  pagesPage.navigate(TENANT)
+  // We need to wait here to allow Peregrine to finish creating the page otherwise the references might not be in place
+  await I.wait(3)
+  await pagesPage.navigate(TENANT)
 })
 
-After(({ perApi }) => {
-  perApi.deleteTenant(TENANT)
+After(async ({ perApi }) => {
+  await perApi.deleteTenant(TENANT)
 })
 
 Scenario('open first reference of "Home"', async ({ I, pagesPage, editPagePage }) => {
-  pagesPage.editPage('Home')
-  editPagePage.rightPanel.openReferencesTab()
-  editPagePage.rightPanel.clickReference(1)
-  I.seeInCurrentUrl('/templates/footer')
+  await pagesPage.editPage('Home')
+  // await I.wait(10)
+  await editPagePage.rightPanel.openReferencesTab()
+  // await I.wait(60)
+  await editPagePage.rightPanel.clickReference(1)
+  await I.seeInCurrentUrl('/templates/footer')
 })

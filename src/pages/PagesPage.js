@@ -12,13 +12,13 @@ class PagesPage extends BaseNodePage {
     return `/content/admin/pages/pages.html/path:/content/${tenant}/pages`
   }
 
-  deletePage(title) {
-    this.explorer.deleteNode('page', title)
+  async deletePage(title) {
+    await this.explorer.deleteNode('page', title)
   }
 
-  editPage(title) {
-    this.explorer.editNode('page', title)
-    editPagePage.loaded()
+  async editPage(title) {
+    await this.explorer.editNode('page', title)
+    await editPagePage.loaded()
   }
 }
 

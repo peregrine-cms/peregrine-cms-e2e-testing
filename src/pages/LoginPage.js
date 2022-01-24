@@ -13,12 +13,12 @@ class LoginPage {
       password
     } = users[user]
 
-    I.amOnPage(this.url)
-    I.fillField('Username', username)
-    I.fillField('Password', secret(password))
-    I.click('Log In')
-    I.waitForElement('.tenant-tabs', 2 * 60)
-    I.see('your websites', 'h2')
+    await I.amOnPage(this.url)
+    await I.fillField('Username', username)
+    await I.fillField('Password', secret(password))
+    await I.click('Log In')
+    await I.waitForElement('.tenant-tabs', 2 * 60)
+    await I.see('your websites', 'h2')
   }
 }
 

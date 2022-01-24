@@ -41,66 +41,66 @@ class EditView {
     }
   }
 
-  isReady() {
-    I.waitForElement(this.locator.frameElement(), 10)
+  async isReady() {
+    await I.waitForElement(this.locator.frameElement(), 10)
   }
 
-  isPreview() {
-    I.seeAttributesOnElements(this.locator.frameElement(), {
+  async isPreview() {
+    await I.seeAttributesOnElements(this.locator.frameElement(), {
       'data-per-mode': 'preview'
     })
   }
 
-  isEditMode() {
-    I.seeAttributesOnElements(this.locator.frameElement(), {
+  async isEditMode() {
+    await I.seeAttributesOnElements(this.locator.frameElement(), {
       'data-per-mode': ''
     })
   }
 
-  selectNthInlineEdit(position) {
-    I.switchTo(this.locator.frame())
-    I.click(this.locator.inlineEdit(position))
-    I.click(this.locator.inlineEdit(position))
-    I.switchTo()
+  async selectNthInlineEdit(position) {
+    await I.switchTo(this.locator.frame())
+    await I.click(this.locator.inlineEdit(position))
+    await I.click(this.locator.inlineEdit(position))
+    await I.switchTo()
   }
 
-  setNthInlineEditContent(position, content) {
-    this.selectNthInlineEdit(position)
-    I.pressKey(['CommandOrControl', 'a'])
-    I.switchTo(this.locator.frame())
-    I.fillField(this.locator.inlineEdit(position), content)
-    I.switchTo()
+  async setNthInlineEditContent(position, content) {
+    await this.selectNthInlineEdit(position)
+    await I.pressKey(['CommandOrControl', 'a'])
+    await I.switchTo(this.locator.frame())
+    await I.fillField(this.locator.inlineEdit(position), content)
+    await I.switchTo()
   }
 
   async grabNthInlineEditContent(position) {
-    I.switchTo(this.locator.frame())
+    await I.switchTo(this.locator.frame())
     const content = await I.grabTextFrom(this.locator.inlineEdit(position))
-    I.switchTo()
+    await I.switchTo()
     return content
   }
 
-  containsText(text) {
-    I.switchTo(this.locator.frame())
-    I.see(text)
-    I.switchTo()
+  async containsText(text) {
+    await I.switchTo(this.locator.frame())
+    await I.see(text)
+    await I.switchTo()
   }
 
-  openEditImageModal(src) {
-    I.switchTo(this.locator.frame())
-    I.seeElement(this.locator.img(src))
-    I.waitForClickable(this.locator.img(src))
-    I.doubleClick(this.locator.img(src))
-    I.wait(this.modal.animation.in)
-    I.switchTo()
+  async openEditImageModal(src) {
+    await I.switchTo(this.locator.frame())
+    await I.seeElement(this.locator.img(src))
+    await I.waitForClickable(this.locator.img(src))
+    await I.doubleClick(this.locator.img(src))
+    await I.wait(this.modal.animation.in)
+    await I.switchTo()
   }
 
-  seeAttributesOnImage(src, attrs) {
-    I.switchTo(this.locator.frame())
-    I.seeAttributesOnElements(this.locator.img(src), attrs)
+  async seeAttributesOnImage(src, attrs) {
+    await I.switchTo(this.locator.frame())
+    await I.seeAttributesOnElements(this.locator.img(src), attrs)
   }
 
-  getCurrentRange() {
-    return I.executeScript((selector) => {
+  async getCurrentRange() {
+    return await I.executeScript((selector) => {
       return {
         start: document.querySelector(
             selector).contentWindow.getSelection().getRangeAt(0).startOffset,

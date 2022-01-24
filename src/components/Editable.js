@@ -23,12 +23,12 @@ class Editable {
     }
   }
 
-  copy() {
-    I.click(this.locator.copyBtn())
+  async copy() {
+    await I.click(this.locator.copyBtn())
   }
 
-  paste() {
-    I.click(this.locator.pasteBtn())
+  async paste() {
+    await I.click(this.locator.pasteBtn())
   }
 }
 

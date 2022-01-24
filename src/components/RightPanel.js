@@ -45,32 +45,37 @@ class RightPanel {
             .find('.explorer-page-referenced-by')
             .find('.collection-item').at(position)
             .as(`reference no. ${position}`)
+      },
+      panelTitle(title) {
+        return this.container()
+          .find('span.panel-title')
+          .withText(title)
       }
     }
   }
 
-  openReferencesTab() {
-    I.waitForElement(this.locator.referencesTabBtn(), 10)
-    I.click(this.locator.referencesTabBtn())
+  async openReferencesTab() {
+    await I.waitForElement(this.locator.referencesTabBtn(), 10)
+    await I.click(this.locator.referencesTabBtn())
   }
 
-  clickReference(position) {
-    I.click(this.locator.reference(position))
+  async clickReference(position) {
+    await I.click(this.locator.reference(position))
   }
 
-  openInfoTab() {
-    I.waitForElement(this.locator.infoTabBtn(), 10)
-    I.click(this.locator.infoTabBtn())
+  async openInfoTab() {
+    await I.waitForElement(this.locator.infoTabBtn(), 10)
+    await I.click(this.locator.infoTabBtn())
   }
 
-  clickEditBtn() {
-    I.waitForElement(this.locator.editBtn(), 10)
-    I.click(this.locator.editBtn())
+  async clickEditBtn() {
+    await I.waitForElement(this.locator.editBtn(), 10)
+    await I.click(this.locator.editBtn())
   }
 
-  clickSaveBtn() {
-    I.waitForElement(this.locator.saveBtn(), 10)
-    I.click(this.locator.saveBtn())
+  async clickSaveBtn() {
+    await I.waitForElement(this.locator.saveBtn(), 10)
+    await I.click(this.locator.saveBtn())
   }
 }
 

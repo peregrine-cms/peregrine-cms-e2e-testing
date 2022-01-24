@@ -9,10 +9,16 @@ class AskUserModal {
     }
   }
 
-  confirm() {
-    I.wait(this.animation.in)
-    I.click('Yes', {css: '#askUserModal'})
-    I.wait(this.animation.out)
+  async confirm() {
+    await I.wait(this.animation.in)
+    await I.click('Yes', {css: '#askUserModal'})
+    await I.wait(this.animation.out)
+  }
+
+  async save() {
+    await I.wait(this.animation.in)
+    await I.click('Save', {css: '#askUserModal'})
+    await I.wait(this.animation.out)
   }
 }
 

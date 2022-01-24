@@ -48,37 +48,37 @@ class InEditView {
     }
   }
 
-  selectTitle() {
-    I.switchTo(this.locator.frame())
-    I.click(this.locator.title())
-    I.switchTo()
+  async selectTitle() {
+    await I.switchTo(this.locator.frame())
+    await I.click(this.locator.title())
+    await I.switchTo()
   }
 
   async grabTitle() {
-    I.switchTo(this.locator.frame())
+    await I.switchTo(this.locator.frame())
     const title = await I.grabTextFrom(this.locator.title())
-    I.switchTo()
+    await I.switchTo()
     return title
   }
 
   async grabSubtitle() {
-    I.switchTo(this.locator.frame())
+    await I.switchTo(this.locator.frame())
     const subtitle = await I.grabTextFrom(this.locator.subtitle())
-    I.switchTo()
+    await I.switchTo()
     return subtitle
   }
 
   async grabText() {
-    I.switchTo(this.locator.frame())
+    await I.switchTo(this.locator.frame())
     const text = await I.grabTextFrom(this.locator.text())
-    I.switchTo()
+    await I.switchTo()
     return text
   }
 
   async grabButtonText(position) {
-    I.switchTo(this.locator.frame())
+    await I.switchTo(this.locator.frame())
     const buttonText = await I.grabTextFrom(this.locator.button(position))
-    I.switchTo()
+    await I.switchTo()
     return buttonText
   }
 }
@@ -106,7 +106,7 @@ class InEditorPanel {
   }
 
   async grabButtonText(position) {
-    return I.grabValueFrom(this.locator.button(position))
+    return await I.grabValueFrom(this.locator.button(position))
   }
 }
 

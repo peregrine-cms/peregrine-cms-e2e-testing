@@ -43,44 +43,44 @@ class EditorPanel {
     }
   }
 
-  titleIs(title) {
-    return I.see(title, this.locator.title())
+  async titleIs(title) {
+    return await I.see(title, this.locator.title())
   }
 
-  selectNthTextEditor(position) {
-    I.click(this.locator.textEditor(position))
+  async selectNthTextEditor(position) {
+    await I.click(this.locator.textEditor(position))
   }
 
-  setNthTextEditorContent(position, content) {
-    this.selectNthTextEditor(position)
-    I.selectAll()
-    I.fillField(this.locator.textEditor(position), content)
+  async setNthTextEditorContent(position, content) {
+    await this.selectNthTextEditor(position)
+    await I.selectAll()
+    await I.fillField(this.locator.textEditor(position), content)
   }
 
   async grabNthTextEditorContent(position) {
     return await I.grabTextFrom(this.locator.textEditor(position))
   }
 
-  selectNthInput(position) {
-    I.click(this.locator.input(position))
+  async selectNthInput(position) {
+    await I.click(this.locator.input(position))
   }
 
-  setNthInputValue(position, value) {
-    this.selectNthInput(position)
-    I.selectAll()
-    I.fillField(this.locator.input(position), value)
+  async setNthInputValue(position, value) {
+    await this.selectNthInput(position)
+    await I.selectAll()
+    await I.fillField(this.locator.input(position), value)
   }
 
   async grabNthInputValue(position) {
     return await I.grabValueFrom(this.locator.input(position))
   }
 
-  getNthRangeField(position) {
-    return new RangeField(this.locator.rangeField(position))
+  async getNthRangeField(position) {
+    return await new RangeField(this.locator.rangeField(position))
   }
 
-  openNthAccordionPanel(position) {
-    I.click(this.locator.accordionPanel(position))
+  async openNthAccordionPanel(position) {
+    await I.click(this.locator.accordionPanel(position))
   }
 }
 

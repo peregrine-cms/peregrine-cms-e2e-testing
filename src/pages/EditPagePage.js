@@ -33,11 +33,11 @@ class EditPagePage {
     }
   }
 
-  loaded() {
-    I.waitForNavigation()
-    I.seeInTitle('Page Editor')
-    I.dontSeeElement(this.locator.loadSpinner())
-    this.editView.isReady()
+  async loaded() {
+    await I.waitForNavigation()
+    await I.seeInTitle('Page Editor')
+    await I.dontSeeElement(this.locator.loadSpinner())
+    await this.editView.isReady()
   }
 }
 

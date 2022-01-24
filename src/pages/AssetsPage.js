@@ -11,8 +11,8 @@ class AssetsPage extends BaseNodePage {
     return `/content/admin/pages/assets.html/path:/content/${tenant}/assets`
   }
 
-  deleteAsset(title) {
-    this.explorer.deleteNode('asset', title)
+  async deleteAsset(title) {
+    await this.explorer.deleteNode('asset', title)
   }
 }
 

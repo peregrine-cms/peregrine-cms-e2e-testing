@@ -46,9 +46,9 @@ class PathBrowser {
     }
   }
 
-  select() {
-    I.click('select', this.locator.container())
-    I.wait(this.animation.out)
+  async select() {
+    await I.click('select', this.locator.container())
+    await I.wait(this.animation.out)
   }
 
   async selectBrowseEntry(name) {
@@ -57,14 +57,14 @@ class PathBrowser {
     await I.see(`${currentPath}/${name}`, this.locator.selectedPath())
   }
 
-  headerIs(header) {
-    I.see(header, this.locator.header())
+  async headerIs(header) {
+    await I.see(header, this.locator.header())
   }
 
-  setImageDimensions(width, height) {
-    I.click(this.locator.linkTab())
-    I.fillField(this.locator.imgWidth(), width)
-    I.fillField(this.locator.imgHeight(), height)
+  async setImageDimensions(width, height) {
+    await I.click(this.locator.linkTab())
+    await I.fillField(this.locator.imgWidth(), width)
+    await I.fillField(this.locator.imgHeight(), height)
   }
 }
 

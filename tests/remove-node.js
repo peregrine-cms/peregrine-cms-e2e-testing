@@ -14,36 +14,37 @@ const TEMPLATE = FEATURE_NAME
 
 Feature(FEATURE_NAME)
 
-Before(async ({ loginAs, perApi, pagesPage, editPagePage }) => {
+Before(async ({ I, loginAs, perApi, pagesPage, editPagePage }) => {
   TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   await loginAs('admin')
+  await I.wait(3)
 })
 
-After(({ perApi }) => {
-  perApi.deleteTenant(TENANT)
+After(async ({ perApi }) => {
+  await perApi.deleteTenant(TENANT)
 })
 
 Scenario('delete page', async ({ perApi, pagesPage }) => {
   await perApi.createPage(TENANT, PAGE)
-  pagesPage.navigate(TENANT)
-  pagesPage.deletePage(PAGE)
+  await pagesPage.navigate(TENANT)
+  await pagesPage.deletePage(PAGE)
 })
 
 Scenario('delete asset', async ({ I, perApi, assetsPage }) => {
   await perApi.createFolder(TENANT, 'assets', ASSET)
-  assetsPage.navigate(TENANT)
-  assetsPage.deleteAsset(ASSET)
+  await assetsPage.navigate(TENANT)
+  await assetsPage.deleteAsset(ASSET)
 })
 
 Scenario('delete object', async ({ perApi, objectsPage }) => {
   await perApi.createObject(TENANT, OBJECT)
-  objectsPage.navigate(TENANT)
-  objectsPage.deleteObject(OBJECT)
+  await objectsPage.navigate(TENANT)
+  await objectsPage.deleteObject(OBJECT)
 })
 
 Scenario('delete template', async ({ perApi, templatesPage }) => {
   await perApi.createTemplate(TENANT, TEMPLATE)
-  templatesPage.navigate(TENANT)
-  templatesPage.deleteTemplate(TEMPLATE)
+  await templatesPage.navigate(TENANT)
+  await templatesPage.deleteTemplate(TEMPLATE)
 })
