@@ -30,12 +30,12 @@ After(async ({ perApi }) => {
   await perApi.deleteTenant(TENANT)
 })
 
-Scenario('insert icon', async ({ I, editPagePage }) => {
+Scenario.skip('insert icon', async ({ I, editPagePage }) => {
   const iconName = 'launcher-icon-1x'
 
   await editPagePage.richToolbar.insertIcon(iconName)
   //AS TODO: does not work at the moment
-  // await editPagePage.editView.containsText(`[icon:${iconName}]`)
+  await editPagePage.editView.containsText(`[icon:${iconName}]`)
 })
 
 Scenario('insert image', async ({ editPagePage }) => {
