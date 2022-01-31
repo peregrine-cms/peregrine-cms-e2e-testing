@@ -9,8 +9,14 @@ setHeadlessWhen(process.env.HEADLESS);
 
 exports.config = {
   tests: './tests/*.js',
+  // tests: './tests/edit-page.js',
+  // tests: './tests/explorer.js',
   // tests: './tests/graphiql.js',
-  // tests: './tests/graphql.js',
+  // tests: './tests/graphql-forms.js',
+  // tests: './tests/graphql-pages.js',
+  // tests: './tests/objects.js',
+  // tests: './tests/range-slider.js',
+  // tests: './tests/rich-toolbar.js',
   output: `./output`,
   verbose: true,
   helpers: {

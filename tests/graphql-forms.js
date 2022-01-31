@@ -1,11 +1,11 @@
 /**
  * single-test run:
- * npm run test -- ./tests/graphql.js
+ * npm run test -- ./tests/graphql-forms.js
  */
 
 const utils = require('../src/modules/utils')
 
-const FEATURE_NAME = 'graphql'
+const FEATURE_NAME = 'graphql-forms'
 let TENANT
 const OBJECT_NAME_PREFIX = 'pw-test-object-contact'
 const ALL_OBJECT_DEFINITIONS_NAME = 'example-form-all'
