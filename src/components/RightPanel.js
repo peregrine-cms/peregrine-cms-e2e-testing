@@ -46,6 +46,27 @@ class RightPanel {
             .find('.collection-item').at(position)
             .as(`reference no. ${position}`)
       },
+      textInput() {
+        return this.container()
+          .find('input')
+          .withAttr({'placeholder': 'text'})
+      },
+      elementType() {
+        return this.container()
+          .find('div.multiselect__select')
+      },
+      elementOption(value) {
+        return this.container()
+          .find('ul.multiselect__content')
+          .find('li.multiselect__element')
+          .withText(value)
+      },
+      panelButton(title) {
+        return this.container()
+          .find('div.editor-panel-buttons')
+          .find('button')
+          .withAttr({'title': title})
+      },
       panelTitle(title) {
         return this.container()
           .find('span.panel-title')
@@ -76,6 +97,19 @@ class RightPanel {
   async clickSaveBtn() {
     await I.waitForElement(this.locator.saveBtn(), 10)
     await I.click(this.locator.saveBtn())
+  }
+
+  async selectElement(option) {
+    await I.waitForElement(this.locator.elementType(), 10)
+    await I.click(this.locator.elementType())
+    await I.wait(1)
+    await I.waitForElement(this.locator.elementOption(option), 10)
+    await I.click(this.locator.elementOption(option))
+    await I.click(this.locator.panelButton('save'))
+  }
+
+  async saveChanges() {
+    await I.click(this.locator.panelButton('save'))
   }
 }
 

@@ -18,7 +18,7 @@ Before(async ({ I, loginAs, perApi, pagesPage }) => {
   await perApi.createTenant(TENANT)
   await perApi.createPage(TENANT, PAGE)
   await loginAs('admin')
-  await I.wait(3)
+  await I.wait(5)
   pagesPage.navigate(TENANT)
 })
 

@@ -41,12 +41,12 @@ Scenario('Check GraphQL Query over Contact Form List',
     let listQuery = graphql.createListQuery(
       TENANT, CONTACT_OBJECT_TYPE_PREFIX, OBJECT_NAME_PREFIX, ['_path', 'email'],
       [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-{suffix}`, `test-{suffix}@test.com`],
-      [1, 2, 3]
+      [0, 1, 2]
     )
     let queryResult = await graphql.executeQuery(
       TENANT, listQuery.query
     )
-    graphql.checkQueryResult(queryResult, listQuery.expected)
+    await graphql.checkQueryResult(queryResult, listQuery.expected)
   }
 )
 
@@ -60,7 +60,7 @@ Scenario('Check GraphQL Query over All Form List',
     let queryResult = await graphql.executeQuery(
       TENANT, listQuery.query
     )
-    graphql.checkQueryResult(queryResult, listQuery.expected)
+    await graphql.checkQueryResult(queryResult, listQuery.expected)
   }
 )
 
@@ -68,13 +68,13 @@ Scenario('Check GraphQL Query of Contact By Path',
   async ({I, graphql}) => {
     let fieldAndValues = {
       fields: ['_path', 'number'],
-      values: [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-2`, 'null']
+      values: [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-5`, 'null']
     }
     let byPathQuery = graphql.createByPathQuery(
-      TENANT, ALL_OBJECT_TYPE_PREFIX, `${OBJECT_NAME_PREFIX}-2`, fieldAndValues
+      TENANT, ALL_OBJECT_TYPE_PREFIX, `${OBJECT_NAME_PREFIX}-5`, fieldAndValues
     )
     let queryResult = await graphql.executeQuery(
       TENANT, byPathQuery.query
     )
-    graphql.checkQueryResult(queryResult, byPathQuery.expected)
+    await graphql.checkQueryResult(queryResult, byPathQuery.expected)
 })
