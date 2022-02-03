@@ -29,69 +29,69 @@ Before(async ({loginAs, perApi, pagesPage, graphql}) => {
 })
 
 After(async ({perApi}) => {
-  // await perApi.deleteTenant(TENANT)
+  await perApi.deleteTenant(TENANT)
 })
 
-// Scenario('Check GraphQL Query over Cards',
-//   async ({I, graphql}) => {
-//     let query = 'query {\n' +
-//       '  cardsList {\n' +
-//       '    items {\n' +
-//       '      _path\n' +
-//       '      cards {\n' +
-//       '        title\n' +
-//       '        text\n' +
-//       '        image\n' +
-//       '      }\n' +
-//       '    }\n' +
-//       '  }\n' +
-//       '}';
-//     let queryResult = await graphql.executeQuery(
-//       TENANT, query
-//     )
-//     let result = JSON.parse(queryResult)
-//     console.log(`Result form Query: ${JSON.stringify(result, null, ' ')}`)
-//     let imagePath = `/content/${TENANT}/${IMAGE_PATH}`
-//     let expectedResult = {
-//       "data": {
-//         "cardsList": {
-//           "items": [
-//             {
-//               "_path": `/content/${TENANT}/pages/skeleton-pages/team/jcr:content`,
-//               "CHECK-_path": "startsWith",
-//               "cards": [
-//                 {
-//                   "title": CARDS_PERSON_TITLES,
-//                   "CHECK-title": "includes",
-//                   'text': '',
-//                   "CHECK-text": "ignored",
-//                   'image': '',
-//                   "CHECK-image": "ignored"
-//                 }
-//               ],
-//               "CHECK-cards": "applyToAll"
-//             },
-//             {
-//               "_path": `/content/${TENANT}/pages/${PAGE_NAME}/jcr:content`,
-//               "CHECK-_path": "startsWith",
-//               "cards": [
-//                 {
-//                   "title": CARDS_SERVICE_TITLES,
-//                   "CHECK-title": "includes",
-//                   'text': '',
-//                   "CHECK-text": "ignored",
-//                   "image": `${imagePath}`
-//                 }
-//               ],
-//               "CHECK-cards": "applyToAll"
-//             }
-//           ]
-//         }
-//       }
-//     }
-//     await graphql.checkQueryJSonResult(result, expectedResult)
-//   }
-// )
+Scenario('Check GraphQL Query over Cards',
+  async ({I, graphql}) => {
+    let query = 'query {\n' +
+      '  cardsList {\n' +
+      '    items {\n' +
+      '      _path\n' +
+      '      cards {\n' +
+      '        title\n' +
+      '        text\n' +
+      '        image\n' +
+      '      }\n' +
+      '    }\n' +
+      '  }\n' +
+      '}';
+    let queryResult = await graphql.executeQuery(
+      TENANT, query
+    )
+    let result = JSON.parse(queryResult)
+    console.log(`Result form Query: ${JSON.stringify(result, null, ' ')}`)
+    let imagePath = `/content/${TENANT}/${IMAGE_PATH}`
+    let expectedResult = {
+      "data": {
+        "cardsList": {
+          "items": [
+            {
+              "_path": `/content/${TENANT}/pages/skeleton-pages/team/jcr:content`,
+              "CHECK-_path": "startsWith",
+              "cards": [
+                {
+                  "title": CARDS_PERSON_TITLES,
+                  "CHECK-title": "includes",
+                  'text': '',
+                  "CHECK-text": "ignored",
+                  'image': '',
+                  "CHECK-image": "ignored"
+                }
+              ],
+              "CHECK-cards": "applyToAll"
+            },
+            {
+              "_path": `/content/${TENANT}/pages/${PAGE_NAME}/jcr:content`,
+              "CHECK-_path": "startsWith",
+              "cards": [
+                {
+                  "title": CARDS_SERVICE_TITLES,
+                  "CHECK-title": "includes",
+                  'text': '',
+                  "CHECK-text": "ignored",
+                  "image": `${imagePath}`
+                }
+              ],
+              "CHECK-cards": "applyToAll"
+            }
+          ]
+        }
+      }
+    }
+    await graphql.checkQueryJSonResult(result, expectedResult)
+  }
+)
 
 Scenario('Check GraphQL Query By Path and Field Value',
   async ({I, graphql, pagesPage, editPagePage}) => {
@@ -107,7 +107,7 @@ Scenario('Check GraphQL Query By Path and Field Value',
 
     let query = 'query {\n' +
       '  simpletextByFieldNameAndValue(\n' +
-      `    _path: "/content/${TENANT}/pages/simple-text-page",\n` +
+      // `    _path: "/content/${TENANT}/pages/simple-text-page",\n` +
       '    fieldName: "element",\n' +
       '    fieldValue: "h1"\n' +
       '  ) {\n' +
@@ -128,6 +128,18 @@ Scenario('Check GraphQL Query By Path and Field Value',
       "data": {
         "simpletextByFieldNameAndValue": {
           "items": [
+            {
+              "_path": `/content/${TENANT}/pages/authors`,
+              "CHECK-_path": "startsWith",
+              "text": "Our Authors",
+              "element": "h1"
+            },
+            {
+              "_path": `/content/${TENANT}/pages/sitemap`,
+              "CHECK-_path": "startsWith",
+              "text": "Sitemap",
+              "element": "h1"
+            },
             {
               "_path": `/content/${TENANT}/pages/simple-text-page`,
               "CHECK-_path": "startsWith",
