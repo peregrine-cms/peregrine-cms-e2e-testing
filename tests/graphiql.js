@@ -44,7 +44,7 @@ Scenario('Check GraphiQL Schema and Query',
     // Check the Schema Explorer
     await graphiqlPage.checkPage(`/content/${TENANT}/graphiql.html`)
     const prefixes = [ALL_OBJECT_TYPE_PREFIX, CONTACT_OBJECT_TYPE_PREFIX]
-    await graphiqlPage.checkSchema(prefixes)
+    await graphiqlPage.checkSchema(prefixes, true)
     let listQuery = graphql.createListQuery(
       TENANT, CONTACT_OBJECT_TYPE_PREFIX, OBJECT_NAME_PREFIX, ['_path', 'email'],
       [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-{suffix}`, `test-{suffix}@test.com`],

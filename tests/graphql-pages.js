@@ -35,7 +35,7 @@ After(async ({perApi}) => {
 Scenario('Check GraphQL Query over Cards',
   async ({I, graphql}) => {
     let query = 'query {\n' +
-      '  cardsList {\n' +
+      '  cardsComponentList {\n' +
       '    items {\n' +
       '      _path\n' +
       '      cards {\n' +
@@ -54,7 +54,7 @@ Scenario('Check GraphQL Query over Cards',
     let imagePath = `/content/${TENANT}/${IMAGE_PATH}`
     let expectedResult = {
       "data": {
-        "cardsList": {
+        "cardsComponentList": {
           "items": [
             {
               "_path": `/content/${TENANT}/pages/skeleton-pages/team/jcr:content`,
@@ -93,6 +93,79 @@ Scenario('Check GraphQL Query over Cards',
   }
 )
 
+Scenario('Check GraphQL Query By Path',
+  async ({I, graphql, pagesPage, editPagePage, perApi}) => {
+    // Setup the Page with the Proper Text / Element settings
+    await perApi.addComponent(TENANT, PAGE, 'simpletext', 'into-into', 'sample')
+    await pagesPage.editPage(PAGE)
+    await editPagePage.editView.setNthInlineEditContent(1, 'Text Header H1')
+    await editPagePage.rightPanel.selectElement('h1')
+    await editPagePage.editView.setNthInlineEditContent(2, 'Text Header H2')
+    await editPagePage.rightPanel.selectElement('h2')
+    await editPagePage.editView.setNthInlineEditContent(3, 'Second Text Header H1')
+    await editPagePage.rightPanel.selectElement('h1')
+    await editPagePage.editView.setNthInlineEditContent(4, 'Text Content')
+    await editPagePage.rightPanel.saveChanges()
+    await I.wait(2)
+
+    let query = 'query {\n' +
+      '  simpletextComponentByPath(\n' +
+      `    _path: "/content/${TENANT}/pages/simple-text-page"\n` +
+      '  ) {\n' +
+      '    items {\n' +
+      '      _path\n' +
+      '      _pagePath\n' +
+      '      text\n' +
+      '      element\n' +
+      '    }\n' +
+      '  }\n' +
+      '}'
+    let queryResult = await graphql.executeQuery(
+      TENANT, query
+    )
+    let result = JSON.parse(queryResult)
+    console.log(`Result form Query: ${JSON.stringify(result, null, ' ')}`)
+    let imagePath = `/content/${TENANT}/${IMAGE_PATH}`
+    let expectedResult = {
+      "data": {
+        "simpletextComponentByPath": {
+          "items": [
+            {
+              "_path": `/content/${TENANT}/pages/simple-text-page`,
+              "CHECK-_path": "startsWith",
+              "_pagePath": `/content/${TENANT}/pages/simple-text-page`,
+              "text": "Text Header H1",
+              "element": "h1"
+            },
+            {
+              "_path": `/content/${TENANT}/pages/simple-text-page`,
+              "CHECK-_path": "startsWith",
+              "_pagePath": `/content/${TENANT}/pages/simple-text-page`,
+              "text": "Text Header H2",
+              "element": "h2"
+            },
+            {
+              "_path": `/content/${TENANT}/pages/simple-text-page`,
+              "CHECK-_path": "startsWith",
+              "_pagePath": `/content/${TENANT}/pages/simple-text-page`,
+              "text": "Second Text Header H1",
+              "element": "h1"
+            },
+            {
+              "_path": `/content/${TENANT}/pages/simple-text-page`,
+              "CHECK-_path": "startsWith",
+              "_pagePath": `/content/${TENANT}/pages/simple-text-page`,
+              "text": "Text Content",
+              "element": "p"
+            }
+          ]
+        }
+      }
+    }
+    await graphql.checkQueryJSonResult(result, expectedResult)
+  }
+)
+
 Scenario('Check GraphQL Query By Path and Field Value',
   async ({I, graphql, pagesPage, editPagePage}) => {
     // Setup the Page with the Proper Text / Element settings
@@ -106,7 +179,7 @@ Scenario('Check GraphQL Query By Path and Field Value',
     await I.wait(2)
 
     let query = 'query {\n' +
-      '  simpletextByFieldNameAndValue(\n' +
+      '  simpletextComponentByField(\n' +
       // `    _path: "/content/${TENANT}/pages/simple-text-page",\n` +
       '    fieldName: "element",\n' +
       '    fieldValue: "h1"\n' +
@@ -126,7 +199,7 @@ Scenario('Check GraphQL Query By Path and Field Value',
     let imagePath = `/content/${TENANT}/${IMAGE_PATH}`
     let expectedResult = {
       "data": {
-        "simpletextByFieldNameAndValue": {
+        "simpletextComponentByField": {
           "items": [
             {
               "_path": `/content/${TENANT}/pages/authors`,

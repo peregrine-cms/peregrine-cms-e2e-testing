@@ -30,7 +30,7 @@ class graphql {
   createListQuery(tenant, objectTypePrefix, objectNamePrefix, fields, values, suffixes) {
     let answer = {}
     let query = 'query {\n' +
-      `  ${objectTypePrefix}List {\n` +
+      `  ${objectTypePrefix}ObjectList {\n` +
       '    items {\n';
     for(let field of fields) {
       query += `      ${field}\n`
@@ -39,7 +39,7 @@ class graphql {
       '  }\n' +
       '}'
     answer.query = query
-    let expected =`{"data":{"${objectTypePrefix}List":{"items":[`;
+    let expected =`{"data":{"${objectTypePrefix}ObjectList":{"items":[`;
     for(let suffix of suffixes) {
       expected += '{'
       for(let i = 0; i < fields.length; i++) {
@@ -61,7 +61,7 @@ class graphql {
   createByPathQuery(tenant, objectTypePrefix, objectName, fieldAndValues) {
     let answer = {}
     let query = 'query {\n' +
-      `  ${objectTypePrefix}ByPath(_path: "/content/${tenant}/objects/${objectName}") {\n` +
+      `  ${objectTypePrefix}ObjectByPath(_path: "/content/${tenant}/objects/${objectName}") {\n` +
       '    item {\n';
     for(let field of fieldAndValues.fields) {
       query += `      ${field}\n`
@@ -70,7 +70,7 @@ class graphql {
       '  }\n' +
       '}'
     answer.query = query
-    let expected =`{"data":{"${objectTypePrefix}ByPath":{"item":[{`;
+    let expected =`{"data":{"${objectTypePrefix}ObjectByPath":{"item":{`;
     for(let i = 0; i < fieldAndValues.fields.length; i++) {
         let field = fieldAndValues.fields[i]
         let value = fieldAndValues.values[i]
@@ -81,7 +81,7 @@ class graphql {
         }
     }
     if(expected.endsWith(',')) { expected = expected.substring(0, expected.length - 1) }
-    expected += '}]}}}'
+    expected += '}}}}'
     answer.expected = expected
     return answer
   }

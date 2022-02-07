@@ -64,7 +64,7 @@ Scenario('Check GraphQL Query over All Form List',
   }
 )
 
-Scenario('Check GraphQL Query of Contact By Path',
+Scenario('Check GraphQL Query of All By Path',
   async ({I, graphql}) => {
     let fieldAndValues = {
       fields: ['_path', 'number'],
@@ -76,5 +76,6 @@ Scenario('Check GraphQL Query of Contact By Path',
     let queryResult = await graphql.executeQuery(
       TENANT, byPathQuery.query
     )
+    console.log(`Result Found: ${queryResult}`)
     await graphql.checkQueryResult(queryResult, byPathQuery.expected)
 })

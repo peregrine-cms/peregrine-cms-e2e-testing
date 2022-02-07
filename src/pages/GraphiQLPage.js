@@ -83,20 +83,22 @@ class GraphiQLPage {
     await I.seeElement(this.locator.queryTypeLink())
   }
 
-  async checkSchema(schemaItemPrefixes) {
+  async checkSchema(schemaItemPrefixes, isObject) {
     await I.waitForElement(this.locator.queryTypeLink(), 10)
     await I.click(this.locator.queryTypeLink())
     await I.waitForElement(this.locator.queryTypeFields(), 10)
     for(let schemaItemPrefix of schemaItemPrefixes) {
       // Check List query
-      await I.seeElement(this.locator.queryTypeFieldItemField(`${schemaItemPrefix}List`))
-      await I.seeElement(this.locator.queryTypeFieldItem(`${schemaItemPrefix}List`))
-      await I.seeElement(this.locator.queryTypeTypeName(`${schemaItemPrefix}List`, `${schemaItemPrefix}Results`))
+      let type = schemaItemPrefix + (isObject ? 'Object' : 'Page') + 'List'
+      await I.seeElement(this.locator.queryTypeFieldItemField(type))
+      await I.seeElement(this.locator.queryTypeFieldItem(type))
+      await I.seeElement(this.locator.queryTypeTypeName(type, `${schemaItemPrefix}Results`))
       // Check By Path query
-      await I.seeElement(this.locator.queryTypeFieldItemField(`${schemaItemPrefix}ByPath`))
-      await I.seeElement(this.locator.queryTypeFieldItem(`${schemaItemPrefix}ByPath`))
-      await I.seeElement(this.locator.queryTypeArg(`${schemaItemPrefix}ByPath`, '_path'))
-      await I.seeElement(this.locator.queryTypeTypeName(`${schemaItemPrefix}ByPath`, `${schemaItemPrefix}Result`))
+      type = schemaItemPrefix + (isObject ? 'Object' : 'Page') + 'ByPath'
+      await I.seeElement(this.locator.queryTypeFieldItemField(type))
+      await I.seeElement(this.locator.queryTypeFieldItem(type))
+      await I.seeElement(this.locator.queryTypeArg(type, '_path'))
+      await I.seeElement(this.locator.queryTypeTypeName(type, `${schemaItemPrefix}Result`))
     }
   }
 
