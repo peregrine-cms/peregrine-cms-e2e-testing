@@ -27,81 +27,6 @@ class graphql {
     return answer
   }
 
-  createListQuery(tenant, objectTypePrefix, objectNamePrefix, fields, values, suffixes) {
-    let answer = {}
-    let query = 'query {\n' +
-      `  ${objectTypePrefix}ObjectList {\n` +
-      '    items {\n';
-    for(let field of fields) {
-      query += `      ${field}\n`
-    }
-    query += '    }\n' +
-      '  }\n' +
-      '}'
-    answer.query = query
-    let expected =`{"data":{"${objectTypePrefix}ObjectList":{"items":[`;
-    for(let suffix of suffixes) {
-      expected += '{'
-      for(let i = 0; i < fields.length; i++) {
-        let field = fields[i]
-        let value = values[i]
-        expected += '"' + field + '":"'
-        value = value.replace('{suffix}', suffix)
-        expected += value + '",';
-      }
-      if(expected.endsWith(',')) { expected = expected.substring(0, expected.length - 1) }
-      expected += '},'
-    }
-    if(expected.endsWith(',')) { expected = expected.substring(0, expected.length - 1) }
-    expected += ']}}}'
-    answer.expected = expected
-    return answer
-  }
-
-  createByPathQuery(tenant, objectTypePrefix, objectName, fieldAndValues) {
-    let answer = {}
-    let query = 'query {\n' +
-      `  ${objectTypePrefix}ObjectByPath(_path: "/content/${tenant}/objects/${objectName}") {\n` +
-      '    item {\n';
-    for(let field of fieldAndValues.fields) {
-      query += `      ${field}\n`
-    }
-    query += '    }\n' +
-      '  }\n' +
-      '}'
-    answer.query = query
-    let expected =`{"data":{"${objectTypePrefix}ObjectByPath":{"item":{`;
-    for(let i = 0; i < fieldAndValues.fields.length; i++) {
-        let field = fieldAndValues.fields[i]
-        let value = fieldAndValues.values[i]
-        if(value === 'null') {
-          expected += '"' + field + '":null,'
-        } else {
-          expected += '"' + field + '":"' + value + '",'
-        }
-    }
-    if(expected.endsWith(',')) { expected = expected.substring(0, expected.length - 1) }
-    expected += '}}}}'
-    answer.expected = expected
-    return answer
-  }
-
-  async checkQueryResult(result, expected) {
-    if (result !== null) {
-      result = result.replace(/\s+/g, '')
-      if (expected.length !== result.length) {
-        throw new Error(`Result does not have the expected length, expected:\n\n'${expected}'\n\nfound:\n\n'${result}'\n\n`)
-      }
-      for (let i = 0; i < expected.length; i++) {
-        if (result[i] !== expected[i]) {
-          throw new Error(`Result does not match at position ${i} (char: ${expected[i]} vs ${result[i]}), expected:\n\n'${expected}'\n\nfound:\n\n'${result}'\n\n`)
-        }
-      }
-    } else {
-      throw new Error(`No Result provided, expected:\n\n${expected}`)
-    }
-  }
-
   async checkQueryJSonResult(result, expected) {
     if (result === undefined) {
       throw new Error('Result is undefined')
@@ -123,7 +48,7 @@ class graphql {
       let foundItem = foundEntries[i][1];
       let expectedItem = expectedObject !== undefined && expectedObject.hasOwnProperty(foundKey) ? expectedObject[foundKey] : undefined;
       console.log(`Found Key: ${foundKey}, Item: ${JSON.stringify(foundItem)}, Expected Item: ${expectedItem}`)
-      if (expectedItem === undefined || expectedItem == null) {
+      if (expectedItem === undefined || (expectedItem == null && foundItem != null)) {
         throw new Error(`Matching Expected Item not found for Path: ${path} -> ${foundKey}`);
       }
       if (Array.isArray(foundItem)) {
@@ -144,6 +69,10 @@ class graphql {
           }
           console.log(`Found Array Item: ${JSON.stringify(foundArrayItem)}, Expected Array Item: ${expectedArrayItem}`)
           await this.checkQueryJSonItem(`${path} -> ${foundKey}[${j}]`, foundArrayItem, expectedArrayItem)
+        }
+      } else if(foundItem == null) {
+        if(expectedItem != null) {
+          throw new Error(`Item: ${path} was null but expected: ${expectedItem}`)
         }
       } else if (typeof foundItem === 'object') {
         console.log(`Compare Object: ${foundKey}`)

@@ -15,7 +15,7 @@ const CONTACT_OBJECT_TYPE_PREFIX = 'exampleFormContact'
 
 Feature(FEATURE_NAME)
 
-Before(async ({loginAs, perApi, pagesPage, graphiqlPage, graphql}) => {
+Before(async ({loginAs, perApi, pagesPage, graphql}) => {
   TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   const map = new Map()
@@ -40,17 +40,39 @@ After(async ({perApi}) => {
 })
 
 Scenario('Check GraphiQL Schema and Query',
-  async ({I, perApi, graphiqlPage, graphql}) => {
+  async ({I, graphiqlPage}) => {
     // Check the Schema Explorer
     await graphiqlPage.checkPage(`/content/${TENANT}/graphiql.html`)
     const prefixes = [ALL_OBJECT_TYPE_PREFIX, CONTACT_OBJECT_TYPE_PREFIX]
     await graphiqlPage.checkSchema(prefixes, true)
-    let listQuery = graphql.createListQuery(
-      TENANT, CONTACT_OBJECT_TYPE_PREFIX, OBJECT_NAME_PREFIX, ['_path', 'email'],
-      [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-{suffix}`, `test-{suffix}@test.com`],
-      [1, 2, 3]
-    )
-    // Do a Query
-    await graphiqlPage.checkQuery(listQuery.query, listQuery.expected)
+    let query = 'query {\n' +
+      '  exampleFormContactObjectList {\n' +
+      '    items {\n' +
+      '      _path\n' +
+      '      email\n' +
+      '    }\n' +
+      '  }\n' +
+      '}'
+    let expectedResult = {
+      "data": {
+        "exampleFormContactObjectList": {
+          "items": [
+            {
+              "_path": `/content/${TENANT}/objects/pw-test-object-contact-1`,
+              "email": "test-1@test.com"
+            },
+            {
+              "_path": `/content/${TENANT}/objects/pw-test-object-contact-2`,
+              "email": "test-2@test.com"
+            },
+            {
+              "_path": `/content/${TENANT}/objects/pw-test-object-contact-3`,
+              "email": "test-3@test.com"
+            }
+          ]
+        }
+      }
+    }
+    await graphiqlPage.checkQuery(query, expectedResult)
   }
 )

@@ -10,8 +10,6 @@ let TENANT
 const OBJECT_NAME_PREFIX = 'pw-test-object-contact'
 const ALL_OBJECT_DEFINITIONS_NAME = 'example-form-all'
 const CONTACT_OBJECT_DEFINITIONS_NAME = 'example-form-contact'
-const ALL_OBJECT_TYPE_PREFIX = 'exampleFormAll'
-const CONTACT_OBJECT_TYPE_PREFIX = 'exampleFormContact'
 
 Feature(FEATURE_NAME)
 
@@ -38,44 +36,98 @@ After(async ({perApi}) => {
 
 Scenario('Check GraphQL Query over Contact Form List',
   async ({I, graphql}) => {
-    let listQuery = graphql.createListQuery(
-      TENANT, CONTACT_OBJECT_TYPE_PREFIX, OBJECT_NAME_PREFIX, ['_path', 'email'],
-      [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-{suffix}`, `test-{suffix}@test.com`],
-      [0, 1, 2]
-    )
+    let query = 'query {\n' +
+      '  exampleFormContactObjectList {\n' +
+      '    items {\n' +
+      '      _path\n' +
+      '      email\n' +
+      '    }\n' +
+      '  }\n' +
+      '}'
     let queryResult = await graphql.executeQuery(
-      TENANT, listQuery.query
+      TENANT, query
     )
-    await graphql.checkQueryResult(queryResult, listQuery.expected)
+    let result = JSON.parse(queryResult)
+    console.log(`Result form Query: ${JSON.stringify(result, null, ' ')}`)
+    let expectedResult = {
+      "data": {
+        "exampleFormContactObjectList": {
+          "items": [
+            {
+              "_path": `/content/${TENANT}/objects/pw-test-object-contact-0`,
+              "email": "test-0@test.com"
+            },
+            {
+              "_path": `/content/${TENANT}/objects/pw-test-object-contact-1`,
+              "email": "test-1@test.com"
+            },
+            {
+              "_path": `/content/${TENANT}/objects/pw-test-object-contact-2`,
+              "email": "test-2@test.com"
+            }
+          ]
+        }
+      }
+    }
   }
 )
 
 Scenario('Check GraphQL Query over All Form List',
   async ({I, graphql}) => {
-    let listQuery = graphql.createListQuery(
-      TENANT, ALL_OBJECT_TYPE_PREFIX, OBJECT_NAME_PREFIX, ['_path'],
-      [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-{suffix}`],
-      [4, 5]
-    )
+    let query = 'query {\n' +
+      '  exampleFormAllObjectList {\n' +
+      '    items {\n' +
+      '      _path\n' +
+      '    }\n' +
+      '  }\n' +
+      '}'
     let queryResult = await graphql.executeQuery(
-      TENANT, listQuery.query
+      TENANT, query
     )
-    await graphql.checkQueryResult(queryResult, listQuery.expected)
+    let result = JSON.parse(queryResult)
+    console.log(`Result form Query: ${JSON.stringify(result, null, ' ')}`)
+    let expectedResult = {
+      "data": {
+        "exampleFormAllObjectList": {
+          "items": [
+            {
+              "_path": `/content/${TENANT}/objects/pw-test-object-contact-4`
+            },
+            {
+              "_path": `/content/${TENANT}/objects/pw-test-object-contact-5`
+            }
+          ]
+        }
+      }
+    }
+    await graphql.checkQueryJSonResult(result, expectedResult)
   }
 )
 
 Scenario('Check GraphQL Query of All By Path',
   async ({I, graphql}) => {
-    let fieldAndValues = {
-      fields: ['_path', 'number'],
-      values: [`/content/${TENANT}/objects/${OBJECT_NAME_PREFIX}-5`, 'null']
-    }
-    let byPathQuery = graphql.createByPathQuery(
-      TENANT, ALL_OBJECT_TYPE_PREFIX, `${OBJECT_NAME_PREFIX}-5`, fieldAndValues
-    )
+    let query = 'query {\n' +
+      `  exampleFormAllObjectByPath(_path: "/content/${TENANT}/objects/pw-test-object-contact-5") {\n` +
+      '    item {\n' +
+      '      _path\n' +
+      '      number\n' +
+      '    }\n' +
+      '  }\n' +
+      '}'
     let queryResult = await graphql.executeQuery(
-      TENANT, byPathQuery.query
+      TENANT, query
     )
-    console.log(`Result Found: ${queryResult}`)
-    await graphql.checkQueryResult(queryResult, byPathQuery.expected)
+    let result = JSON.parse(queryResult)
+    console.log(`Result form Query: ${JSON.stringify(result, null, ' ')}`)
+    let expectedResult = {
+      "data": {
+        "exampleFormAllObjectByPath": {
+          "item": {
+            "_path": `/content/${TENANT}/objects/pw-test-object-contact-5`,
+            "number": null
+          }
+        }
+      }
+    }
+    await graphql.checkQueryJSonResult(result, expectedResult)
 })

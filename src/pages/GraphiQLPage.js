@@ -114,7 +114,9 @@ class GraphiQLPage {
     await I.wait(1)
     let queryResult = await I.grabTextFromAll(this.locator.resultWindow())
     if(queryResult != null && queryResult.length == 1) {
-      graphql.checkQueryResult(queryResult[0], expected)
+      let result = JSON.parse(queryResult[0])
+      console.log(`Query:\n${query}\n\nResult:\n${result}`)
+      await graphql.checkQueryJSonResult(result, expected)
     } else {
       throw new Error(`No or too many Query Result found: ${queryResult}`)
     }
