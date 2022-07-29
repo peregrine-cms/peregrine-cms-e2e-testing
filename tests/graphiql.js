@@ -4,9 +4,11 @@
  */
 
 const utils = require('../src/modules/utils')
+const {setup} = require('../src/modules/setup')
 
 const FEATURE_NAME = 'graphiql'
 let TENANT
+const PAGE = FEATURE_NAME
 const OBJECT_NAME_PREFIX = 'pw-test-object-contact'
 const ALL_OBJECT_DEFINITIONS_NAME = 'example-form-all'
 const CONTACT_OBJECT_DEFINITIONS_NAME = 'example-form-contact'
@@ -15,9 +17,11 @@ const CONTACT_OBJECT_TYPE_PREFIX = 'exampleFormContact'
 
 Feature(FEATURE_NAME)
 
-Before(async ({loginAs, perApi, pagesPage, graphql}) => {
+Before(async ({ I, loginAs, perApi, pagesPage, graphql }) => {
+  await setup()
   TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
+  await perApi.createPage(TENANT, PAGE)
   const map = new Map()
   map.set('email', 'test@test1.com')
   map.set('text', 'Hi, this is me')
@@ -29,7 +33,9 @@ Before(async ({loginAs, perApi, pagesPage, graphql}) => {
   await graphql.createObjectFromDefinitions( perApi, TENANT, `${OBJECT_NAME_PREFIX}-4`, ALL_OBJECT_DEFINITIONS_NAME)
   await graphql.createObjectFromDefinitions( perApi, TENANT, `${OBJECT_NAME_PREFIX}-5`, ALL_OBJECT_DEFINITIONS_NAME)
   await loginAs('admin')
+  await I.wait(5)
   await pagesPage.navigate(TENANT)
+  console.log('before(), end')
 })
 
 After(async ({perApi}) => {

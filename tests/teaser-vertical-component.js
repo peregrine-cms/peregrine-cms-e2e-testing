@@ -5,6 +5,7 @@
 
 const utils = require('../src/modules/utils')
 const expect = require('expect')
+const {setup} = require('../src/modules/setup')
 
 const FEATURE_NAME = 'teaser-vertical-component'
 let TENANT
@@ -13,6 +14,7 @@ const PAGE = FEATURE_NAME
 Feature(FEATURE_NAME)
 
 Before(async ({ I, loginAs, perApi, pagesPage, editPagePage }) => {
+  setup()
   TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   await perApi.createPage(TENANT, PAGE)
@@ -30,13 +32,14 @@ After(async ({ perApi }) => {
   await perApi.deleteTenant(TENANT)
 })
 
-Scenario('sync title to editor-panel', async ({ editPagePage }) => {
+Scenario('sync title to editor-panel', async ({ I, editPagePage }) => {
   const text = `${FEATURE_NAME}_-äöüß?$)=!%"='\\\``
 
   await editPagePage.editView.setNthInlineEditContent(1, text)
   expect(await editPagePage.editorPanel.grabNthInputValue(1))
     .toBe(text)
-  expect(await editPagePage.editView.grabNthInlineEditContent(1))
+  await editPagePage.editorPanel.selectNthInput(1)
+  expect(await editPagePage.editView.teaserVertical.grabTitle())
     .toBe(text)
 })
 
@@ -44,8 +47,10 @@ Scenario('sync title to edit-view', async ({ editPagePage }) => {
   const text = `äöüß?$)=!%"='\\\`-_${FEATURE_NAME}`
 
   await editPagePage.editorPanel.setNthInputValue(1, text)
-  expect(await editPagePage.editView.grabNthInlineEditContent(1))
+  expect(await editPagePage.editView.teaserVertical.grabTitle())
     .toBe(text)
+  // expect(await editPagePage.editView.grabNthInlineEditContent(1))
+  //   .toBe(text)
   expect(await editPagePage.editorPanel.grabNthInputValue(1))
     .toBe(text)
 })

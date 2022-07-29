@@ -5,6 +5,7 @@
 
 const expect = require('expect')
 const utils = require('../src/modules/utils')
+const {setup} = require('../src/modules/setup')
 
 const FEATURE_NAME = 'switching-components'
 let TENANT
@@ -13,6 +14,7 @@ const PAGE = FEATURE_NAME
 Feature(FEATURE_NAME)
 
 Before(async ({ I, loginAs, perApi, pagesPage }) => {
+  setup()
   TENANT = utils.generateRandomName()
   await perApi.createTenant(TENANT)
   await perApi.createPage(TENANT, PAGE)
@@ -45,6 +47,8 @@ Scenario('content stays the same', async ({ I, perApi, editPagePage }) => {
   await perApi.addComponent(TENANT, PAGE, 'richtext', 'into-into', 'sample')
   await I.refreshPage()
   await editPagePage.loaded()
+  // Need to select the title
+  await editPagePage.selectSection(1)
   const before = [
     await editPagePage.editView.teaserVertical.grabTitle(),
     await editPagePage.editView.teaserVertical.grabSubtitle(),

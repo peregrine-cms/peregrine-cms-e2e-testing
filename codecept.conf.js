@@ -17,6 +17,9 @@ exports.config = {
   // tests: './tests/objects.js',
   // tests: './tests/range-slider.js',
   // tests: './tests/rich-toolbar.js',
+  // tests: './tests/switching-components.js',
+  // tests: './tests/teaser-vertical-component.js',
+  // tests: './tests/user-drop-down.js',
   output: `./output`,
   verbose: true,
   helpers: {
@@ -86,7 +89,7 @@ exports.config = {
     },
     autoLogin: {
       enabled: true,
-      saveToFile: true,
+      saveToFile: false,
       inject: 'loginAs',
       users: {
         admin: {

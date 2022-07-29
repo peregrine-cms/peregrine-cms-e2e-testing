@@ -37,6 +37,11 @@ class EditView {
         return locate('img')
             .withAttr({src})
             .as(src)
+      },
+      inLineTitle() {
+        return locate('h1')
+          // .withAttr({'data-per-inline': 'model.title'})
+          .as('Inline Title')
       }
     }
   }
@@ -88,7 +93,6 @@ class EditView {
   async openEditImageModal(src) {
     await I.switchTo(this.locator.frame())
     await I.seeElement(this.locator.img(src))
-    await I.waitForClickable(this.locator.img(src))
     await I.doubleClick(this.locator.img(src))
     await I.wait(this.modal.animation.in)
     await I.switchTo()

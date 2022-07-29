@@ -39,6 +39,10 @@ class EditPagePage {
     await I.dontSeeElement(this.locator.loadSpinner())
     await this.editView.isReady()
   }
+
+  async selectSection(index) {
+    await editView.selectNthInlineEdit(index)
+  }
 }
 
 module.exports = new EditPagePage()

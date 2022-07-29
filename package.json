@@ -4,13 +4,14 @@
   "description": "testing for peregrine-cms",
   "main": "main.js",
   "dependencies": {
-    "@codeceptjs/configure": "^0.6.2",
+    "@codeceptjs/configure": "^0.8.0",
     "@codeceptjs/examples": "^1.2.1",
-    "@codeceptjs/ui": "^0.4.3",
+    "@codeceptjs/ui": "^0.4.6",
     "clipboardy": "^2.3.0",
-    "codeceptjs": "^3.0.4",
+    "codeceptjs": "^3.3.4",
+    "electron": "^19.0.9",
     "expect": "^26.6.2",
-    "playwright": "^1.17.2",
+    "playwright": "^1.24.1",
     "puppeteer": "^5.4.0",
     "uuid": "^8.3.2"
   },
@@ -31,9 +32,9 @@
   },
   "homepage": "https://github.com/Felix-Puetz/pcms-testing#readme",
   "devDependencies": {
-    "@codeceptjs/helper": "^1.0.1",
+    "@codeceptjs/helper": "^1.0.2",
     "cross-env": "^7.0.3",
-    "form-data": "^3.0.0",
+    "form-data": "^3.0.1",
     "vue-cli-plugin-codeceptjs-puppeteer": "^0.1.2"
   }
 }

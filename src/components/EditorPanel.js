@@ -72,7 +72,8 @@ class EditorPanel {
   }
 
   async grabNthInputValue(position) {
-    return await I.grabValueFrom(this.locator.input(position))
+    const answer = await I.grabValueFrom(this.locator.input(position))
+    return answer
   }
 
   async getNthRangeField(position) {

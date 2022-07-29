@@ -15,7 +15,8 @@ class BasePage {
   }
 
   async navigate(tenant) {
-    await I.amOnPage(this.getUrl(tenant))
+    var path = this.getUrl(tenant);
+    await I.amOnPage(path)
     await I.waitForElement('.tooling-page', 10)
   }
 }
