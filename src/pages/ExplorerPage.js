@@ -150,7 +150,7 @@ class ExplorerPage extends BaseNodePage {
     await I.dontSeeElement(this.locator.deleteButton(label))
   }
 
-  async editEnty(label) {
+  async editEntry(label) {
     await I.waitForElement(this.locator.editButton(label), 5)
     await I.click(this.locator.editButton(label))
   }

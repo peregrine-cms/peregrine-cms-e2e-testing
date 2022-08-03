@@ -1,5 +1,7 @@
 const ExplorerPage = require('./ExplorerPage')
 const WizardPage = require('./bases/WizardPage')
+const FileEditorPage = require("./FileEditorPage");
+const {Request} = require('../helpers/ExtendedRest2')
 const {I} = inject()
 
 const TYPE = "object-definitions"
@@ -45,6 +47,25 @@ class ObjectDefinitionsPage extends ExplorerPage {
     await wizard.checkStep(OD_WIZARD_TITLE, OD_WIZARD_STEP_2, BUTTON_FINISH)
     await wizard.gotoNextStep(BUTTON_FINISH)
     await super.checkEntryByLabel(title)
+  }
+
+  async editSchema(tenant, odName, schemaName, content, cursorIndex) {
+    await this.selectEntryByLabel(schemaName)
+    let fileEditor = new FileEditorPage(tenant, odName, schemaName)
+    await fileEditor.addContent(content, cursorIndex)
+    await this.clickBreadcrumb(odName)
+  }
+
+  async getSchemaContent(tenant, odName, schemaName) {
+    let response = await I.sendRestRequest2(
+      Request.build()
+        .withUrl(`/content/${tenant}/${TYPE}/${odName}/${schemaName}`)
+        .withGET()
+        .withHeader('content-type', 'application/json')
+        .as(`Get OD Dialog.json file: "${tenant}"`)
+    )
+    console.log(`Response Data: ${response.data}`)
+    return JSON.stringify(response.data).replace(/ /g, "")
   }
 }
 

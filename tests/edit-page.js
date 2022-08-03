@@ -29,7 +29,7 @@ Scenario('open first reference of "Home"', async ({ I, pagesPage, editPagePage }
   await pagesPage.editPage('Home')
   // await I.wait(10)
   await editPagePage.rightPanel.openReferencesTab()
-  // await I.wait(60)
+  await I.wait(2)
   await editPagePage.rightPanel.clickReference(1)
   await I.seeInCurrentUrl('/templates/footer')
 })

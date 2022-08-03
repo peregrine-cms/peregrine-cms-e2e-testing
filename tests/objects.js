@@ -53,7 +53,7 @@ Scenario('edit an object',
   async ({I, objectsPage, perApi}) => {
     await objectsPage.createNew(EXAMPLE_FORM_ALL_NAME, OBJECT_NAME_ALL)
     await objectsPage.checkEntryByLabel(OBJECT_NAME_ALL)
-    await objectsPage.editEnty(OBJECT_NAME_ALL)
+    await objectsPage.editEntry(OBJECT_NAME_ALL)
     // console.log(`Check right panel: ${OBJECT_NAME_ALL}`)
     await objectsPage.rightPanel.fillInput(STRING_VARIABLE_NAME, STRING_VARIABLE_VALUE)
     // console.log(`Save Changes to ${OBJECT_NAME}`)
@@ -84,7 +84,7 @@ Scenario('remove all items from collection',
       await I.wait(5)
       await I.refreshPage()
       console.log(`Edit Object: ${OBJECT_NAME}`)
-      await objectsPage.editEnty(OBJECT_NAME)
+      await objectsPage.editEntry(OBJECT_NAME)
       console.log(`Object Info Tab`)
       await objectsPage.rightPanel.openInfoTab()
       //AS TODO: no more dialogs so this does not work

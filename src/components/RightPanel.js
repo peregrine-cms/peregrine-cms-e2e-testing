@@ -115,11 +115,11 @@ class RightPanel {
   }
 
   async fillInput(id, value) {
-    await I.waitForElement(this.locator.inputById(id), 10)
-    await I.click(this.locator.inputById(id))
-    await I.fillField(this.locator.inputById(id), value)
-    // Does not work with the current Peregrine
-    // await I.click(this.locator.panelButton('save'))
+    // Input IDs are all lowercase so we adjust it here
+    const id2 = id.toLowerCase()
+    await I.waitForElement(this.locator.inputById(id2), 10)
+    await I.click(this.locator.inputById(id2))
+    await I.fillField(this.locator.inputById(id2), value)
   }
 
   async saveChanges() {

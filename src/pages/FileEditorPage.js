@@ -28,14 +28,17 @@ class FileEditorPage extends ExplorerPage {
           .find('div.vue-codemirror-wrap')
       },
       textarea() {
-        return this.container()
+        return this.codemirror()
           .find('div div textarea')
       },
-      saveAndClose() {
+      actions() {
         return this.container()
           .find('div.actions')
+      },
+      save() {
+        return this.actions()
           .find('a')
-          .withAttr({title: 'save & exit'})
+          .withAttr({title: 'save'})
       }
     }
 
@@ -52,13 +55,33 @@ class FileEditorPage extends ExplorerPage {
     return `/content/admin/pages/file/edit.html/path:/content/${this.tenant}/${TYPE}/${this.odName}/${this.fileName}`;
   }
 
-  async setContent(content) {
-    // TODO: I cannot test the File Editor because it uses CodeMirror and I cannot edit it as is
+  async addContent(content, insertIndex) {
+    // Just test CodeMirror to see if we can enter some code there
+    let attribute = await I.grabAttributeFrom(this.locator.textarea(), 'spellcheck')
+    console.log(`Textarea Spellcheck Attribute: ${attribute}`)
+
+    let currentContent = await I.grabValueFrom(this.locator.textarea())
+    console.log(`Textarea Content: ${currentContent}`)
+
+
+    // To add content we have to move the cursor to the code mirror (tab to get to the CM element and then arrow right
+    // to move the cursor to where we add content
     await I.waitForElement(this.locator.textarea(), 10)
+    for (let i = 0; i < 14; i++) {
+      await I.pressKey('Tab')
+    }
+    await I.pressKey('Tab')
+    for (let i = 0; i < insertIndex; i++) {
+      await I.pressKey('ArrowRight')
+    }
     await I.fillField(this.locator.textarea(), content)
-    await I.wait(20)
-    // await I.waitForElement(this.locator.saveAndClose(), 10)
-    // await I.click(this.locator.saveAndClose())
+    // console.log('Start waiting 20s for manual saving')
+    // await I.wait(20)
+    // console.log('Done waiting')
+
+    await I.moveCursorTo(this.locator.actions())
+    await I.waitForElement(this.locator.save(), 10)
+    await I.click(this.locator.save())
   }
 }
 
