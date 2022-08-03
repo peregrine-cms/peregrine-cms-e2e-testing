@@ -15,7 +15,9 @@ exports.config = {
   // tests: './tests/graphql-forms.js',
   // tests: './tests/graphql-pages.js',
   // tests: './tests/objects.js',
+  // tests: './tests/object-definitions.js',
   // tests: './tests/range-slider.js',
+  // tests: './tests/remove-node.js',
   // tests: './tests/rich-toolbar.js',
   // tests: './tests/switching-components.js',
   // tests: './tests/teaser-vertical-component.js',
@@ -57,6 +59,7 @@ exports.config = {
     pagesPage: './src/pages/PagesPage',
     assetsPage: './src/pages/AssetsPage',
     objectsPage: './src/pages/ObjectsPage',
+    objectDefinitionsPage: './src/pages/ObjectDefinitionsPage',
     templatesPage: './src/pages/TemplatesPage',
     graphiqlPage: './src/pages/GraphiQLPage',
     graphql: './src/modules/graphql'

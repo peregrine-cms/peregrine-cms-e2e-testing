@@ -40,7 +40,7 @@ Scenario('delete asset', async ({ I, perApi, assetsPage }) => {
 Scenario('delete object', async ({ perApi, objectsPage }) => {
   await perApi.createObject(TENANT, OBJECT)
   await objectsPage.navigate(TENANT)
-  await objectsPage.deleteObject(OBJECT)
+  await objectsPage.deleteEntry(OBJECT)
 })
 
 Scenario('delete template', async ({ perApi, templatesPage }) => {

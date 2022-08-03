@@ -1,41 +1,55 @@
-const BaseNodePage = require('./bases/BaseNodePage')
-// const rightPanel = require('../components/RightPanel')
+const ExplorerPage = require('./ExplorerPage')
+const WizardPage = require('./bases/WizardPage')
+const {Request} = require('../helpers/ExtendedRest2')
 const {I} = inject()
 
-class ObjectsPage extends BaseNodePage {
+const TYPE = "objects"
+const OD_WIZARD_TITLE = 'create an object'
+const OD_WIZARD_STEP_1 = 'select object type'
+const OD_WIZARD_STEP_2 = 'choose name'
+const OD_WIZARD_STEP_3 = 'values'
+const OD_WIZARD_TITLE_INPUT_ID = 'object-name'
 
-  // rightPanel
+const BUTTON_NEXT = 'Next'
+const BUTTON_FINISH = 'Finish'
+
+class ObjectsPage extends ExplorerPage {
 
   constructor() {
-    super()
-    // this.rightPanel = rightPanel
+    super(TYPE)
+  }
 
-    this.locator = {
-      container() {
-        return locate('.tooling-page')
-      },
-      createBtn() {
-        return this.container()
-            .find('a').withAttr({title: 'add object'})
-            .as('create-btn')
-      }
-    }
+  getAddButtonText() {
+    return "add object"
   }
 
   getUrl(tenant) {
     return `/content/admin/pages/objects.html/path:/content/${tenant}/objects`
   }
 
-  async deleteObject(title) {
-    await this.explorer.deleteNode('object', title)
+  // Maybe we should move this to a wizard
+  async createNew(odName, title) {
+    await super.checkBreadcrumbs()
+    await super.addNew(title)
+    let wizard = new WizardPage()
+    await wizard.checkStep(OD_WIZARD_TITLE, OD_WIZARD_STEP_1, BUTTON_NEXT)
+    await wizard.selectFromList(odName)
+    await wizard.gotoNextStep(BUTTON_NEXT)
+    await wizard.checkStep(OD_WIZARD_TITLE, OD_WIZARD_STEP_2, BUTTON_NEXT)
+    await wizard.fillInput(OD_WIZARD_TITLE_INPUT_ID, title)
+    await wizard.gotoNextStep(BUTTON_NEXT)
+    await wizard.checkStep(OD_WIZARD_TITLE, OD_WIZARD_STEP_3, BUTTON_FINISH)
+    await wizard.gotoNextStep(BUTTON_FINISH)
+    await super.checkEntryByLabel(title)
   }
 
-  async editObject(title) {
-    await this.explorer.editNode('object', title)
-  }
-
-  async saveChanges(title) {
-    await this.explorer.saveChanges('object', title)
+  async getObject(tenant, objectName) {
+    const url = `/content/${tenant}/objects/${objectName}.model.json`
+    let request = Request.build()
+      .withUrl(url)
+      .withGET()
+      .as(`Get Object Model, tehant: ${tenant}, object: ${objectName}`);
+    return await I.sendRestRequest2(request)
   }
 }
 

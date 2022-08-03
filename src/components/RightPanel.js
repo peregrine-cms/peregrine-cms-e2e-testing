@@ -71,6 +71,12 @@ class RightPanel {
         return this.container()
           .find('span.panel-title')
           .withText(title)
+      },
+      inputById(id) {
+        return this.body()
+          .find('div.wrapper')
+          .find(`input#${id}`)
+          .as('InputById')
       }
     }
   }
@@ -106,6 +112,14 @@ class RightPanel {
     await I.waitForElement(this.locator.elementOption(option), 10)
     await I.click(this.locator.elementOption(option))
     await I.click(this.locator.panelButton('save'))
+  }
+
+  async fillInput(id, value) {
+    await I.waitForElement(this.locator.inputById(id), 10)
+    await I.click(this.locator.inputById(id))
+    await I.fillField(this.locator.inputById(id), value)
+    // Does not work with the current Peregrine
+    // await I.click(this.locator.panelButton('save'))
   }
 
   async saveChanges() {
