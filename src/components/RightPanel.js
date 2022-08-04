@@ -45,32 +45,85 @@ class RightPanel {
             .find('.explorer-page-referenced-by')
             .find('.collection-item').at(position)
             .as(`reference no. ${position}`)
+      },
+      textInput() {
+        return this.container()
+          .find('input')
+          .withAttr({'placeholder': 'text'})
+      },
+      elementType() {
+        return this.container()
+          .find('div.multiselect__select')
+      },
+      elementOption(value) {
+        return this.container()
+          .find('ul.multiselect__content')
+          .find('li.multiselect__element')
+          .withText(value)
+      },
+      panelButton(title) {
+        return this.container()
+          .find('div.editor-panel-buttons')
+          .find('button')
+          .withAttr({'title': title})
+      },
+      panelTitle(title) {
+        return this.container()
+          .find('span.panel-title')
+          .withText(title)
+      },
+      inputById(id) {
+        return this.body()
+          .find('div.wrapper')
+          .find(`input#${id}`)
+          .as('InputById')
       }
     }
   }
 
-  openReferencesTab() {
-    I.waitForElement(this.locator.referencesTabBtn(), 10)
-    I.click(this.locator.referencesTabBtn())
+  async openReferencesTab() {
+    await I.waitForElement(this.locator.referencesTabBtn(), 10)
+    await I.click(this.locator.referencesTabBtn())
   }
 
-  clickReference(position) {
-    I.click(this.locator.reference(position))
+  async clickReference(position) {
+    await I.click(this.locator.reference(position))
   }
 
-  openInfoTab() {
-    I.waitForElement(this.locator.infoTabBtn(), 10)
-    I.click(this.locator.infoTabBtn())
+  async openInfoTab() {
+    await I.waitForElement(this.locator.infoTabBtn(), 10)
+    await I.click(this.locator.infoTabBtn())
   }
 
-  clickEditBtn() {
-    I.waitForElement(this.locator.editBtn(), 10)
-    I.click(this.locator.editBtn())
+  async clickEditBtn() {
+    await I.waitForElement(this.locator.editBtn(), 10)
+    await I.click(this.locator.editBtn())
   }
 
-  clickSaveBtn() {
-    I.waitForElement(this.locator.saveBtn(), 10)
-    I.click(this.locator.saveBtn())
+  async clickSaveBtn() {
+    await I.waitForElement(this.locator.saveBtn(), 10)
+    await I.click(this.locator.saveBtn())
+  }
+
+  async selectElement(option) {
+    await I.waitForElement(this.locator.elementType(), 10)
+    await I.click(this.locator.elementType())
+    await I.wait(1)
+    await I.waitForElement(this.locator.elementOption(option), 10)
+    await I.click(this.locator.elementOption(option))
+    await I.click(this.locator.panelButton('save'))
+  }
+
+  async fillInput(id, value) {
+    // Input IDs are all lowercase so we adjust it here
+    const id2 = id.toLowerCase()
+    await I.waitForElement(this.locator.inputById(id2), 10)
+    await I.click(this.locator.inputById(id2))
+    await I.fillField(this.locator.inputById(id2), value)
+  }
+
+  async saveChanges() {
+    await I.click(this.locator.panelButton('save'))
   }
 }
 

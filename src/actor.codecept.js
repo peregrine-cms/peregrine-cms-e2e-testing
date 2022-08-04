@@ -7,6 +7,7 @@ module.exports = () => {
     },
 
     async amLoggedIn() {
+      await loginPage.amLoggedIn()
     },
 
     selectAll() {

@@ -19,66 +19,58 @@ class InEditView {
         return {frame: '#editview'}
       },
       container(position = 1) {
-        return locate('section[class$="-components-teaservertical"]')
+        return locate('div.editor-panel')
+            .find('fieldset')
             .at(position)
             .as('teaser-vertical')
       },
       title() {
         return locate(this.container())
-            .find('$$model.title')
+            .find('input#title')
             .as('teaservertical.title')
       },
       subtitle() {
         return locate(this.container())
-            .find('$$model.subtitle')
+            .find('textarea#subtitle')
             .as('teaservertical.subtitle')
       },
       text() {
         return locate(this.container())
-            .find('$$model.text')
+            .find('div.text-editor-wrapper')
+             .find('p p')
             .as('teaservertical.text')
       },
       button(position) {
-        return locate(this.container())
-            .find('.teaser-actions')
-            .find('a.btn')
+        return locate('div.editor-panel')
+            .find('div.editor-panel-buttons')
+            .find('button')
             .at(position)
             .as(`teaservertical.button.${position}`)
       }
     }
   }
 
-  selectTitle() {
-    I.switchTo(this.locator.frame())
-    I.click(this.locator.title())
-    I.switchTo()
+  async selectTitle() {
+    await I.click(this.locator.title())
   }
 
   async grabTitle() {
-    I.switchTo(this.locator.frame())
-    const title = await I.grabTextFrom(this.locator.title())
-    I.switchTo()
+    const title = await I.grabValueFrom(this.locator.title())
     return title
   }
 
   async grabSubtitle() {
-    I.switchTo(this.locator.frame())
-    const subtitle = await I.grabTextFrom(this.locator.subtitle())
-    I.switchTo()
+    const subtitle = await I.grabValueFrom(this.locator.subtitle())
     return subtitle
   }
 
   async grabText() {
-    I.switchTo(this.locator.frame())
     const text = await I.grabTextFrom(this.locator.text())
-    I.switchTo()
     return text
   }
 
   async grabButtonText(position) {
-    I.switchTo(this.locator.frame())
     const buttonText = await I.grabTextFrom(this.locator.button(position))
-    I.switchTo()
     return buttonText
   }
 }
@@ -106,7 +98,7 @@ class InEditorPanel {
   }
 
   async grabButtonText(position) {
-    return I.grabValueFrom(this.locator.button(position))
+    return await I.grabValueFrom(this.locator.button(position))
   }
 }
 

@@ -14,9 +14,10 @@ class BasePage {
     throw `missing impl.: getUrl(tenant=${tenant})`
   }
 
-  navigate(tenant) {
-    I.amOnPage(this.getUrl(tenant))
-    I.waitForElement('.tooling-page', 10)
+  async navigate(tenant) {
+    var path = this.getUrl(tenant);
+    await I.amOnPage(path)
+    await I.waitForElement('.tooling-page', 10)
   }
 }
 

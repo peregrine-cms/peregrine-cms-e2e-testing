@@ -22,8 +22,14 @@ class PathBrowser {
       },
       selectedPath() {
         return locate(this.container())
-            .find('.pathbrowser-selected-path')
+            .find('span.pathbrowser-selected-path')
             .as('selected path')
+      },
+      goBack() {
+        return locate(this.container())
+            .find('div.modal-content-section')
+            .find('a')
+            .as('key arrow left')
       },
       header() {
         return locate(this.container())
@@ -46,25 +52,38 @@ class PathBrowser {
     }
   }
 
-  select() {
-    I.click('select', this.locator.container())
-    I.wait(this.animation.out)
+  async select() {
+    await I.click('select', this.locator.container())
+    await I.wait(this.animation.out)
   }
 
   async selectBrowseEntry(name) {
+    const hasPath = await tryTo(() => I.seeElement(this.locator.selectedPath()))
+    if(!hasPath) {
+      // Try to click on Element
+      const foundItem = await tryTo(() => I.click(this.locator.browserEntry(name)))
+      // Need to wait here to make sure the dialog can adjust
+      await I.wait(5)
+      if(foundItem) {
+        await I.click(this.locator.goBack())
+        // Need to wait here to make sure the dialog can adjust
+        await I.wait(5)
+      }
+    }
     const currentPath = await I.grabTextFrom(this.locator.selectedPath())
     await I.click(this.locator.browserEntry(name))
+    await I.wait(5)
     await I.see(`${currentPath}/${name}`, this.locator.selectedPath())
   }
 
-  headerIs(header) {
-    I.see(header, this.locator.header())
+  async headerIs(header) {
+    await I.see(header, this.locator.header())
   }
 
-  setImageDimensions(width, height) {
-    I.click(this.locator.linkTab())
-    I.fillField(this.locator.imgWidth(), width)
-    I.fillField(this.locator.imgHeight(), height)
+  async setImageDimensions(width, height) {
+    await I.click(this.locator.linkTab())
+    await I.fillField(this.locator.imgWidth(), width)
+    await I.fillField(this.locator.imgHeight(), height)
   }
 }
 

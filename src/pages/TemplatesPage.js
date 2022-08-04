@@ -11,8 +11,8 @@ class TemplatesPage extends BaseNodePage{
     return `/content/admin/pages/templates.html/path:/content/${tenant}/templates`
   }
 
-  deleteTemplate(title) {
-    this.explorer.deleteNode('template', title)
+  async deleteTemplate(title) {
+    await this.explorer.deleteNode('template', title)
   }
 }
 

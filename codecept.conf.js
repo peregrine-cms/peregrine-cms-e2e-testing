@@ -9,6 +9,19 @@ setHeadlessWhen(process.env.HEADLESS);
 
 exports.config = {
   tests: './tests/*.js',
+  // tests: './tests/edit-page.js',
+  // tests: './tests/explorer.js',
+  // tests: './tests/graphiql.js',
+  // tests: './tests/graphql-forms.js',
+  // tests: './tests/graphql-pages.js',
+  // tests: './tests/objects.js',
+  // tests: './tests/object-definitions.js',
+  // tests: './tests/range-slider.js',
+  // tests: './tests/remove-node.js',
+  // tests: './tests/rich-toolbar.js',
+  // tests: './tests/switching-components.js',
+  // tests: './tests/teaser-vertical-component.js',
+  // tests: './tests/user-drop-down.js',
   output: `./output`,
   verbose: true,
   helpers: {
@@ -26,6 +39,14 @@ exports.config = {
       defaultHeaders: {
         auth: users.admin
       }
+    },
+    ExtendedRest2: {
+      require: './src/helpers/ExtendedRest2.js',
+      endpoint: 'http://localhost:8080',
+      withCredentials: true,
+      defaultHeaders: {
+        auth: users.admin
+      }
     }
   },
   include: {
@@ -38,7 +59,10 @@ exports.config = {
     pagesPage: './src/pages/PagesPage',
     assetsPage: './src/pages/AssetsPage',
     objectsPage: './src/pages/ObjectsPage',
-    templatesPage: './src/pages/TemplatesPage'
+    objectDefinitionsPage: './src/pages/ObjectDefinitionsPage',
+    templatesPage: './src/pages/TemplatesPage',
+    graphiqlPage: './src/pages/GraphiQLPage',
+    graphql: './src/modules/graphql'
   },
   async teardown() {
     const outputDir = path.join(__dirname, exports.config.output)
@@ -56,7 +80,7 @@ exports.config = {
       enabled: true
     },
     tryTo: {
-      enabled: false
+      enabled: true
     },
     screenshotOnFail: {
       enabled: true
@@ -68,7 +92,7 @@ exports.config = {
     },
     autoLogin: {
       enabled: true,
-      saveToFile: true,
+      saveToFile: false,
       inject: 'loginAs',
       users: {
         admin: {

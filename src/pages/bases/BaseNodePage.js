@@ -11,9 +11,9 @@ class BaseNodePage extends BasePage{
     this.explorer = explorer
   }
 
-  navigate(tenant) {
-    super.navigate(tenant)
-    I.waitForElement('.explorer', 10)
+  async navigate(tenant) {
+    await super.navigate(tenant)
+    await I.waitForElement('.explorer', 10)
   }
 }
 

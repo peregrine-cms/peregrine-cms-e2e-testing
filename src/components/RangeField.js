@@ -19,30 +19,30 @@ class RangeField {
     }
   }
 
-  clickButton() {
-    I.click(this.locator.button())
+  async clickButton() {
+    await I.click(this.locator.button())
   }
 
   async grabInputValue() {
     return await I.grabValueFrom(this.locator.input())
   }
 
-  selectInput() {
-    I.click(this.locator.input())
+  async selectInput() {
+    await I.click(this.locator.input())
   }
 
-  setInputValue(value) {
-    this.selectInput()
-    I.selectAll()
-    I.fillField(this.locator.input(), value)
+  async setInputValue(value) {
+    await this.selectInput()
+    await I.selectAll()
+    await I.fillField(this.locator.input(), value)
   }
 
   async grabRangeValue() {
     return await I.grabValueFrom(this.locator.range())
   }
 
-  selectRange() {
-    I.click(this.locator.range())
+  async selectRange() {
+    await I.click(this.locator.range())
   }
 }
 

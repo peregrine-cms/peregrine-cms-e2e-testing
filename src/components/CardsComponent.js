@@ -29,10 +29,10 @@ class InEditView {
     }
   }
 
-  seeNumber(count) {
-    I.switchTo(this.locator.frame())
-    I.seeNumberOfElements(this.locator._container(), count)
-    I.switchTo()
+  async seeNumber(count) {
+    await I.switchTo(this.locator.frame())
+    await I.seeNumberOfElements(this.locator._container(), count)
+    await I.switchTo()
   }
 }
 

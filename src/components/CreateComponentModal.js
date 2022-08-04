@@ -21,14 +21,14 @@ class CreateComponentModal {
     }
   }
 
-  search(query) {
-    I.fillField(this.locator.searchField(), query)
+  async search(query) {
+    await I.fillField(this.locator.searchField(), query)
   }
 
-  createComponent(fullComponentName) {
-    I.pressKey(['CommandOrControl', '.'])
-    this.search(fullComponentName)
-    I.click(fullComponentName)
+  async createComponent(fullComponentName) {
+    await I.pressKey(['CommandOrControl', '.'])
+    await this.search(fullComponentName)
+    await I.click(fullComponentName)
   }
 }
 
